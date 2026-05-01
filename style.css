@@ -1,0 +1,136 @@
+/* التنسيق العام */
+*{
+    margin:0; padding:0;
+    box-sizing:border-box;
+    font-family:'Cairo', sans-serif;
+}
+
+:root {
+    --bg-main: #f4f4f4;
+    --bg-card: #ffffff;
+    --text-main: #1f3a37;
+    --primary-green: #0b7a5c;
+    --gold-border: #d4af37;
+    --sand-accent: #EFE3CA;
+    --nav-bg: #ffffff;
+    --discord-color: #5865F2;
+}
+
+.dark-theme {
+    --bg-main: #121212;
+    --bg-card: #1e1e1e;
+    --text-main: #e0e0e0;
+    --nav-bg: #181818;
+    --sand-accent: #2a2a2a;
+}
+
+body {
+    direction: rtl;
+    background: var(--bg-main);
+    color: var(--text-main);
+    transition: 0.4s;
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+}
+
+/* Loader */
+#loader {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: var(--bg-card);
+    display: flex; justify-content: center; align-items: center;
+    z-index: 9999;
+}
+.loader-content { text-align: center; color: var(--primary-green); }
+.loader-content i { font-size: 60px; animation: spin 2s linear infinite; }
+@keyframes spin { 100% { transform: rotate(360deg); } }
+
+/* Navbar */
+.gov-bar {
+    background: var(--nav-bg);
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 15px 50px;
+    box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+    border-bottom: 3px solid var(--gold-border);
+    position: sticky; top: 0; z-index: 1000;
+}
+
+.gov-logo { font-size: 22px; font-weight: 800; color: var(--primary-green); display: flex; gap: 10px; }
+
+.gov-menu { display: flex; align-items: center; gap: 10px; }
+
+.nav-btn {
+    background: none; border: none; font-size: 15px; font-weight: 700;
+    cursor: pointer; color: var(--text-main); padding: 8px 12px; transition: 0.3s;
+}
+
+.nav-btn:hover, .nav-btn.active { color: var(--primary-green); transform: translateY(-2px); }
+
+/* الأفتار العلوي */
+.avatar-img {
+    width: 40px; height: 40px; border-radius: 50%;
+    border: 2px solid var(--gold-border); margin-right: 15px;
+}
+
+/* Hero */
+.hero { padding: 60px 20px; text-align: center; background: var(--bg-card); border-bottom: 2px solid var(--gold-border); }
+.hero h1 { font-size: 32px; }
+.hero-divider { width: 80px; height: 4px; background: var(--primary-green); margin: 15px auto; }
+
+/* Grid & Cards */
+.container { width: 90%; max-width: 1100px; margin: -30px auto 40px; }
+.features-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 25px; }
+
+.stat-box {
+    background: var(--bg-card); padding: 35px; border-radius: 15px; text-align: center;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1); transition: 0.4s;
+}
+.stat-box i { font-size: 40px; color: var(--primary-green); margin-bottom: 15px; }
+.center-box { grid-column: 1 / span 2; width: 60%; justify-self: center; }
+.card-hover:hover { transform: translateY(-10px); border-bottom: 4px solid var(--gold-border); }
+
+/* بطاقة الموظف */
+.employee-info-card {
+    background: var(--bg-card); padding: 25px; border-radius: 15px;
+    border-right: 10px solid var(--primary-green); margin-bottom: 40px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+.info-content { display: flex; align-items: center; gap: 20px; }
+.avatar-large { width: 70px; height: 70px; border-radius: 12px; border: 3px solid var(--sand-accent); }
+
+/* صفحة تسجيل الدخول */
+.login-container { display: flex; justify-content: center; align-items: center; min-height: 70vh; }
+.login-box {
+    background: var(--bg-card); padding: 40px; border-radius: 20px;
+    text-align: center; max-width: 450px; box-shadow: 0 15px 50px rgba(0,0,0,0.1);
+}
+.login-header i { font-size: 50px; color: var(--primary-green); margin-bottom: 15px; }
+
+.discord-login-btn {
+    background: var(--discord-color); color: white; border: none;
+    padding: 15px 25px; border-radius: 12px; font-size: 17px; font-weight: 800;
+    cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+    width: 100%; margin-top: 25px; transition: 0.3s;
+    box-shadow: 0 5px 15px rgba(88, 101, 242, 0.3);
+}
+.discord-login-btn:hover { background: #4752c4; transform: scale(1.02); }
+.discord-content { display: flex; align-items: center; gap: 10px; }
+
+/* Notice Card */
+.long-notice-card {
+    background: var(--sand-accent); padding: 25px; border-radius: 15px;
+    border-right: 8px solid var(--primary-green);
+}
+
+/* Footer */
+.footer { background: var(--nav-bg); padding: 20px; text-align: center; border-top: 2px solid var(--gold-border); margin-top: auto; }
+
+/* Pages System */
+.page { display: none; }
+.active-page { display: block; animation: fadeIn 0.5s ease; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+@media (max-width: 768px) {
+    .features-grid { grid-template-columns: 1fr; }
+    .center-box { width: 100%; }
+    .gov-bar { flex-direction: column; gap: 10px; }
+}

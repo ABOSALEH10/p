@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بوابة الموظفين | وزارة العدل KR</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="loader">
+        <div class="loader-content">
+            <i class="fa-solid fa-scale-balanced"></i>
+            <h2>منصة موظفين الوزارة KR</h2>
+        </div>
+    </div>
+
+    <div class="gov-bar">
+        <div class="gov-logo">
+            <i class="fa-solid fa-scale-balanced"></i>
+            <span>وزارة العدل KR</span>
+        </div>
+
+        <div class="gov-menu">
+            <button onclick="showPage(event, 'home')" class="nav-btn active"><i class="fa-solid fa-house"></i> الصفحة الرئيسية</button>
+            <button onclick="showPage(event, 'login-page')" class="nav-btn"><i class="fa-solid fa-user-tie"></i> تسجيل دخول الموظفين</button>
+            <button class="nav-btn"><i class="fa-solid fa-file-invoice"></i> الخدمات</button>
+            <button class="nav-btn"><i class="fa-solid fa-circle-info"></i> عن الوزارة</button>
+            
+            <button onclick="toggleDarkMode()" class="nav-btn theme-toggle">
+                <i id="themeIcon" class="fa-solid fa-moon"></i>
+            </button>
+
+            <div class="user-profile" id="userProfile" style="display: none;">
+                <img src="" alt="Avatar" id="userAvatar" class="avatar-img">
+            </div>
+        </div>
+    </div>
+
+    <main id="home" class="page active-page">
+        
+        <div class="hero">
+            <h1 id="heroText">أهلاً بك في موقع الموظفين الخاص بالوزارة</h1>
+            <div class="hero-divider"></div>
+        </div>
+
+        <div class="container">
+            <div class="employee-info-card" id="employeeCard" style="display: none;">
+                <div class="info-content">
+                    <img src="" alt="Avatar" id="cardAvatar" class="avatar-large">
+                    <div class="info-text">
+                        <h2 id="userName">--</h2>
+                        <p>الرتبة: <span id="userRank">-</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="features-grid">
+                <div class="stat-box card-hover">
+                    <i class="fa-solid fa-landmark-flag"></i>
+                    <h3>المنصة الرسمية لوزارة العدل KR</h3>
+                    <p class="small-desc">هنا ستدار أغلب مواضيع ومستندات ووثائق والخ.</p>
+                </div>
+
+                <div class="stat-box card-hover">
+                    <i class="fa-solid fa-file-shield"></i>
+                    <h3>تسهيل الوصول للوثائق والاقتراحات</h3>
+                    <p class="small-desc">يمكن تقديم شكوى واقتراح وطلبات من خلال المنصة.</p>
+                </div>
+
+                <div class="stat-box card-hover center-box">
+                    <i class="fa-solid fa-user-gear"></i>
+                    <h3>البيانات والمعلومات عن الموظف</h3>
+                    <p class="small-desc">يمكن تسجيل الدخول إلى الموقع بحسابك عن طريق الدسكورد والبدأ بالخدمة بالموقع.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="help-container">
+            <div class="long-notice-card">
+                <div class="notice-header">
+                    <i class="fa-solid fa-circle-question"></i>
+                    <h2>كيف أسجل الدخول للموقع؟</h2>
+                </div>
+                <p>لكي تسجل دخول، يجب عليك الانتقال إلى صفحة تسجيل دخول الموظفين من الأعلى والانتقال إليها واتباع الخطوات اللازمة فيها.</p>
+            </div>
+        </div>
+    </main>
+
+    <div id="login-page" class="page">
+        <div class="login-container">
+            <div class="login-box">
+                <div class="login-header">
+                    <i class="fa-solid fa-user-shield"></i>
+                    <h1>تسجيل دخول الموظفين</h1>
+                </div>
+                <p>للوصول إلى لوحة التحكم والخدمات الخاصة، يرجى التحقق من هويتك عبر نظام الربط الموحد.</p>
+                
+                <button class="discord-login-btn" onclick="handleMockLogin()">
+                    <div class="discord-content">
+                        <i class="fa-brands fa-discord"></i>
+                        <span>الانتقال للدسكورد للتسجيل</span>
+                    </div>
+                    <i class="fa-solid fa-arrow-left arrow-icon"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-bottom">
+            جميع الحقوق محفوظة © وزارة العدل KR
+        </div>
+    </footer>
+
+    <script>
+        // التحميل الأولي
+        window.onload = function() {
+            setTimeout(() => {
+                document.getElementById("loader").style.display = "none";
+            }, 1500);
+
+            if(localStorage.getItem('theme') === 'dark'){
+                document.body.classList.add('dark-theme');
+                document.getElementById('themeIcon').classList.replace('fa-moon', 'fa-sun');
+            }
+        }
+
+        // تبديل الأوضاع
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-theme');
+            let icon = document.getElementById('themeIcon');
+            if(document.body.classList.contains('dark-theme')){
+                icon.classList.replace('fa-moon', 'fa-sun');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                icon.classList.replace('fa-sun', 'fa-moon');
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        // التنقل بين الصفحات
+        function showPage(event, pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
+            document.getElementById(pageId).classList.add('active-page');
+            
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            if(event.currentTarget.classList.contains('nav-btn')) {
+                event.currentTarget.classList.add('active');
+            }
+        }
+
+        // محاكاة تسجيل الدخول (للعرض فقط حالياً)
+        function handleMockLogin() {
+            const fakeData = {
+                username: "Abdullah_KR",
+                avatar: "https://cdn.discordapp.com/embed/avatars/0.png",
+                rank: "-"
+            };
+
+            // إظهار العناصر المخفية
+            document.getElementById('userProfile').style.display = 'block';
+            document.getElementById('employeeCard').style.display = 'block';
+            document.getElementById('userAvatar').src = fakeData.avatar;
+            document.getElementById('cardAvatar').src = fakeData.avatar;
+            document.getElementById('userName').innerText = fakeData.username;
+            document.getElementById('userRank').innerText = fakeData.rank;
+
+            // توجيه للملف الشخصي (الرئيسية)
+            showPage(event, 'home');
+        }
+    </script>
+</body>
+</html>
