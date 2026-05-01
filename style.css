@@ -114,7 +114,43 @@ body {
 }
 .discord-login-btn:hover { background: #4752c4; transform: scale(1.02); }
 .discord-content { display: flex; align-items: center; gap: 10px; }
+/* تنسيق رابط الدسكورد ليظهر كزر */
+.discord-login-link {
+    text-decoration: none; /* إزالة الخط تحت الرابط */
+    background: var(--discord-color);
+    color: white;
+    padding: 15px 25px;
+    border-radius: 12px;
+    font-size: 17px;
+    font-weight: 800;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: 25px;
+    transition: 0.3s;
+    box-shadow: 0 5px 15px rgba(88, 101, 242, 0.3);
+}
 
+.discord-login-link:hover {
+    background: #4752c4;
+    transform: scale(1.02);
+    color: white; /* المحافظة على لون النص */
+}
+
+.discord-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.arrow-icon {
+    transition: 0.3s;
+}
+
+.discord-login-link:hover .arrow-icon {
+    transform: translateX(-5px);
+}
 /* Notice Card */
 .long-notice-card {
     background: var(--sand-accent); padding: 25px; border-radius: 15px;
