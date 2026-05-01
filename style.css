@@ -65,7 +65,7 @@ body {
 
 .nav-btn:hover, .nav-btn.active { color: var(--primary-green); transform: translateY(-2px); }
 
-/* الأفتار العلوي */
+/* افتار الدس الي بالزاوية*/
 .avatar-img {
     width: 40px; height: 40px; border-radius: 50%;
     border: 2px solid var(--gold-border); margin-right: 15px;
@@ -114,9 +114,9 @@ body {
 }
 .discord-login-btn:hover { background: #4752c4; transform: scale(1.02); }
 .discord-content { display: flex; align-items: center; gap: 10px; }
-/* تنسيق رابط الدسكورد ليظهر كزر */
+/* تنسيق رابط زر الدسكورد*/
 .discord-login-link {
-    text-decoration: none; /* إزالة الخط تحت الرابط */
+    text-decoration: none; /* إزالة الخط الي تحت الرابط */
     background: var(--discord-color);
     color: white;
     padding: 15px 25px;
@@ -169,4 +169,116 @@ body {
     .features-grid { grid-template-columns: 1fr; }
     .center-box { width: 100%; }
     .gov-bar { flex-direction: column; gap: 10px; }
+}
+/* ==================== نافذة كلمة المرور (Modal) ==================== */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.85); /* تمويه باللون الأسود */
+    backdrop-filter: blur(8px); /* تأثير ضبابي */
+    z-index: 10000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: var(--bg-card);
+    padding: 40px;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    position: relative;
+    border: 3px solid var(--primary-green);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+}
+
+.modal-content .lock-icon {
+    font-size: 40px;
+    color: var(--primary-green);
+    margin-bottom: 15px;
+}
+
+.modal-content h2 {
+    margin-bottom: 10px;
+}
+
+.modal-content p {
+    font-size: 14px;
+    margin-bottom: 20px;
+    color: var(--text-main);
+    opacity: 0.8;
+}
+
+.modal-content input {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 15px;
+    border: 2px solid var(--sand-accent);
+    background: var(--bg-main);
+    color: var(--text-main);
+    border-radius: 10px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    outline: none;
+    transition: 0.3s;
+}
+
+.modal-content input:focus {
+    border-color: var(--primary-green);
+}
+
+.error-msg {
+    color: #ff4d4d !important;
+    font-weight: bold;
+    display: none;
+    margin-bottom: 15px !important;
+    opacity: 1 !important;
+}
+
+.verify-btn {
+    background: var(--primary-green);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    width: 100%;
+    transition: 0.3s;
+}
+
+.verify-btn:hover {
+    background: #09634a;
+    transform: translateY(-2px);
+}
+
+.close-btn {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background: none;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    color: #ff4d4d;
+    transition: 0.3s;
+}
+
+.close-btn:hover {
+    transform: scale(1.2);
+}
+
+/* تأثير الاهتزاز عند إدخال كلمة مرور خاطئة */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    50% { transform: translateX(10px); }
+    75% { transform: translateX(-10px); }
+}
+.shake {
+    animation: shake 0.4s;
 }

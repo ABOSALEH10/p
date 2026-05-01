@@ -33,7 +33,7 @@
                 <i id="themeIcon" class="fa-solid fa-moon"></i>
             </button>
 
-            <!-- الأفتار العلوي يظهر فقط عند تسجيل الدخول -->
+            <!-- أفتار الدسكورد يظهر فقط عند تسجيل الدخول -->
             <div class="user-profile" id="userProfile" style="display: none;">
                 <img src="" alt="Avatar" id="userAvatar" class="avatar-img">
             </div>
@@ -47,7 +47,7 @@
         </div>
 
         <div class="container">
-            <!-- بطاقة الموظف الحقيقية -->
+            <!-- معلومات الموظف-->
             <div class="employee-info-card" id="employeeCard" style="display: none;">
                 <div class="info-content">
                     <img src="" alt="Avatar" id="cardAvatar" class="avatar-large">
@@ -100,15 +100,30 @@
                 </div>
                 <p>للوصول إلى لوحة التحكم والخدمات الخاصة، يرجى التحقق من هويتك عبر نظام الربط الموحد.</p>
                 
-                <!-- الزر الآن هو رابط فعلي لـ API الخاص بك -->
-                <a href="https://47267878-1844-4692-84f9-943fc3cfd9b6-00-2xnigvlewqvsl.spock.replit.dev/api/discord/login" class="discord-login-link">
+                <!-- تم تحويل الرابط لزر يفتح نافذة كلمة المرور أولاً -->
+                <button onclick="openPasswordModal()" class="discord-login-btn">
                     <div class="discord-content">
                         <i class="fa-brands fa-discord"></i>
                         <span>الانتقال للدسكورد للتسجيل</span>
                     </div>
                     <i class="fa-solid fa-arrow-left arrow-icon"></i>
-                </a>
+                </button>
             </div>
+        </div>
+    </div>
+
+    <!-- نافذة التحقق من كلمة المرور -->
+    <div id="passwordModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closePasswordModal()"><i class="fa-solid fa-xmark"></i></button>
+            <i class="fa-solid fa-lock lock-icon"></i>
+            <h2>التحقق من الهوية</h2>
+            <p>يرجى إدخال كلمة المرور للمتابعة والتسجيل</p>
+            
+            <input type="password" id="staffPassword" placeholder="أدخل كلمة المرور هنا...">
+            <p id="passwordError" class="error-msg"><i class="fa-solid fa-circle-exclamation"></i> كلمة المرور غير صحيحة</p>
+            
+            <button class="verify-btn" onclick="verifyPassword()">تحقق ومتابعة</button>
         </div>
     </div>
 
@@ -119,33 +134,64 @@
     </footer>
 
     <script>
-        // معالجة البيانات القادمة من Discord بعد العودة
-        (function() {
+        // دالة لعرض بيانات الموظف
+        function showProfile(p) {
+            var av = document.getElementById('userAvatar');
+            if (av) { av.src = p.avatar; }
+            var up = document.getElementById('userProfile');
+            if (up) { up.style.display = 'block'; }
+
+            var ca = document.getElementById('cardAvatar');
+            if (ca) { ca.src = p.avatar; }
+            var nd = document.getElementById('userNameDisplay');
+            if (nd) { nd.textContent = p.displayName; }
+            var ec = document.getElementById('employeeCard');
+            if (ec) { ec.style.display = 'block'; }
+
+            var lb = document.getElementById('loginNavBtn');
+            if (lb) { lb.style.display = 'none'; }
+        }
+
+        // توحيد أكواد الحفظ والاسترجاع (يمنع فقدان التسجيل عند التحديث)
+        (function initAuth() {
+            var MONTH_MS = 30 * 24 * 60 * 60 * 1000;
             var params = new URLSearchParams(window.location.search);
-            var raw = params.get('discord_profile');
-            if (!raw) return;
-            try {
-                var p = JSON.parse(decodeURIComponent(raw));
-                
-                // تحديث واجهة المستخدم بالبيانات الحقيقية
-                document.getElementById('userProfile').style.display = 'block';
-                document.getElementById('employeeCard').style.display = 'block';
-                
-                document.getElementById('userAvatar').src = p.avatar;
-                document.getElementById('cardAvatar').src = p.avatar;
-                document.getElementById('userNameDisplay').textContent = p.displayName;
-                document.getElementById('userRank').textContent = "-"; // الرتبة حالياً ثابتة
+            var fromUrl = params.get('discord_profile');
+            
+            // 1. إذا جاء من الدسكورد للتو
+            if (fromUrl) {
+                try {
+                    var p = JSON.parse(decodeURIComponent(fromUrl));
+                    // حفظ في المتصفح
+                    localStorage.setItem('discordProfile', JSON.stringify({
+                        data: p,
+                        savedAt: Date.now()
+                    }));
+                    history.replaceState({}, '', window.location.pathname);
+                    showProfile(p);
+                    // تحويله للصفحة الرئيسية بعد تسجيل الدخول
+                    showPage(null, 'home'); 
+                } catch(e) { console.error("Error parsing discord data:", e); }
+                return;
+            }
 
-                // إخفاء زر "تسجيل الدخول" من القائمة بعد الدخول
-                document.getElementById('loginNavBtn').style.display = 'none';
-
-                // تنظيف الرابط
-                history.replaceState({}, '', window.location.pathname);
-            } catch(e) {
-                console.error("خطأ في تحليل بيانات الدسكورد", e);
+            // 2. إذا كان الموقع مفتوحاً من قبل (استرجاع الجلسة)
+            var stored = localStorage.getItem('discordProfile');
+            if (stored) {
+                try {
+                    var obj = JSON.parse(stored);
+                    if (Date.now() - obj.savedAt > MONTH_MS) {
+                        localStorage.removeItem('discordProfile');
+                    } else {
+                        showProfile(obj.data);
+                    }
+                } catch(e) {
+                    localStorage.removeItem('discordProfile');
+                }
             }
         })();
 
+        // إعدادات الـ Loader والمظهر
         window.onload = function() {
             setTimeout(() => {
                 document.getElementById("loader").style.display = "none";
@@ -157,6 +203,7 @@
             }
         }
 
+        // دوال التبديل والصفحات
         function toggleDarkMode() {
             document.body.classList.toggle('dark-theme');
             let icon = document.getElementById('themeIcon');
@@ -176,6 +223,35 @@
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
             if(event && event.currentTarget.classList.contains('nav-btn')) {
                 event.currentTarget.classList.add('active');
+            }
+        }
+
+        // نظام التحقق من كلمة المرور
+        const DISCORD_API_URL = "https://47267878-1844-4692-84f9-943fc3cfd9b6-00-2xnigvlewqvsl.spock.replit.dev/api/discord/login";
+
+        function openPasswordModal() {
+            document.getElementById('passwordModal').style.display = 'flex';
+            document.getElementById('staffPassword').value = '';
+            document.getElementById('passwordError').style.display = 'none';
+        }
+
+        function closePasswordModal() {
+            document.getElementById('passwordModal').style.display = 'none';
+        }
+
+        function verifyPassword() {
+            const pw = document.getElementById('staffPassword').value;
+            const errorMsg = document.getElementById('passwordError');
+            
+            if (pw === "MJ-43325") {
+                errorMsg.style.display = 'none';
+                window.location.href = DISCORD_API_URL;
+            } else {
+                errorMsg.style.display = 'block';
+                // إضافة اهتزاز للنافذة عند الخطأ (تأثير بصري جميل)
+                const modal = document.querySelector('.modal-content');
+                modal.classList.add('shake');
+                setTimeout(() => modal.classList.remove('shake'), 400);
             }
         }
     </script>
