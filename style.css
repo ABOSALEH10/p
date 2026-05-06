@@ -282,3 +282,55 @@ body {
 .shake {
     animation: shake 0.4s;
 }
+/* تنسيق نصوص البطاقة الإضافية */
+.info-text p {
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: var(--text-main);
+}
+
+.info-text p span {
+    color: var(--primary-green);
+    font-weight: 800;
+}
+
+/* زر تسجيل الخروج */
+.logout-btn {
+    width: 100%;
+    margin-top: 20px;
+    background: #c0392b; /* أحمر ملكي هادئ */
+    color: #fff;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-family: 'Cairo', sans-serif;
+    font-weight: 800;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(192, 57, 43, 0.2);
+}
+
+.logout-btn i {
+    font-size: 18px;
+}
+
+.logout-btn:hover {
+    background: #e74c3c; /* أحمر فاتح عند التحويم */
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(231, 76, 60, 0.4);
+}
+
+.logout-btn:active {
+    transform: translateY(-1px);
+}
+
+/* تعديل بسيط على البطاقة لتستوعب الزر */
+.employee-info-card {
+    display: flex;
+    flex-direction: column; /* جعل العناصر تحت بعضها */
+    transition: 0.3s;
+}
