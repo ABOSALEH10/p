@@ -160,13 +160,21 @@
         }
 
         function openLogoutModal() {
-            document.getElementById('logoutModal').style.display = 'flex';
-        }
+    const modal = document.getElementById('logoutModal');
+    modal.classList.add('is-open');
+}
 
-        function closeLogoutModal() {
-            document.getElementById('logoutModal').style.display = 'none';
-        }
+function closeLogoutModal() {
+    const modal = document.getElementById('logoutModal');
+    modal.classList.remove('is-open');
+}
 
+function logout() {
+    localStorage.removeItem('discordProfile');
+    localStorage.removeItem('theme');
+    closeLogoutModal();
+    window.location.replace(window.location.pathname);
+}
         function logout() {
             localStorage.removeItem('discordProfile');
             window.location.href = window.location.pathname;
