@@ -46,7 +46,6 @@
         </div>
 
         <div class="container">
-            <!-- بطاقة معلومات الموظف المحدثة -->
             <div class="employee-info-card" id="employeeCard" style="display: none;">
                 <div class="info-content">
                     <img src="" alt="Avatar" id="cardAvatar" class="avatar-large">
@@ -58,8 +57,8 @@
                         <p>نوع القسم [ محامي - قاضي ]: <span id="userDept">--</span></p>
                     </div>
                 </div>
-                <!-- زر تسجيل الخروج الجديد -->
-                <button onclick="logout()" class="logout-btn">
+
+                <button onclick="openLogoutModal()" class="logout-btn">
                     <i class="fa-solid fa-right-from-bracket"></i> تسجيل الخروج من الحساب
                 </button>
             </div>
@@ -85,7 +84,6 @@
             </div>
         </div>
 
-        <!-- تم إضافة ID لإخفاء هذا المربع عند تسجيل الدخول -->
         <div class="help-container" id="helpBox">
             <div class="long-notice-card">
                 <div class="notice-header">
@@ -129,6 +127,21 @@
         </div>
     </div>
 
+    <!-- نافذة تأكيد تسجيل الخروج -->
+    <div id="logoutModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeLogoutModal()"><i class="fa-solid fa-xmark"></i></button>
+            <i class="fa-solid fa-right-from-bracket lock-icon"></i>
+            <h2>تأكيد تسجيل الخروج</h2>
+            <p>هل أنت متأكد من تسجيل الخروج من الحساب؟</p>
+
+            <div class="logout-actions">
+                <button class="confirm-logout-btn" onclick="logout()">متأكد</button>
+                <button class="cancel-logout-btn" onclick="closeLogoutModal()">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
     <footer class="footer">
         <div class="footer-bottom">جميع الحقوق محفوظة © وزارة العدل KR</div>
     </footer>
@@ -141,16 +154,22 @@
             document.getElementById('userNameDisplay').textContent = p.displayName;
             document.getElementById('employeeCard').style.display = 'block';
             document.getElementById('loginNavBtn').style.display = 'none';
-            
-            // إزالة مربع "كيف أسجل الدخول" عند نجاح الدخول
+
             var helpBox = document.getElementById('helpBox');
             if (helpBox) helpBox.style.display = 'none';
         }
 
-        // دالة تسجيل الخروج
+        function openLogoutModal() {
+            document.getElementById('logoutModal').style.display = 'flex';
+        }
+
+        function closeLogoutModal() {
+            document.getElementById('logoutModal').style.display = 'none';
+        }
+
         function logout() {
             localStorage.removeItem('discordProfile');
-            window.location.href = window.location.pathname; // إعادة توجيه للصفحة النظيفة
+            window.location.href = window.location.pathname;
         }
 
         (function initAuth() {
@@ -187,6 +206,7 @@
 
         window.onload = function() {
             setTimeout(() => { document.getElementById("loader").style.display = "none"; }, 1000);
+
             if(localStorage.getItem('theme') === 'dark'){
                 document.body.classList.add('dark-theme');
                 document.getElementById('themeIcon').classList.replace('fa-moon', 'fa-sun');
@@ -195,7 +215,9 @@
 
         function toggleDarkMode() {
             document.body.classList.toggle('dark-theme');
+
             let icon = document.getElementById('themeIcon');
+
             if(document.body.classList.contains('dark-theme')){
                 icon.classList.replace('fa-moon', 'fa-sun');
                 localStorage.setItem('theme', 'dark');
@@ -208,25 +230,38 @@
         function showPage(event, pageId) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
             document.getElementById(pageId).classList.add('active-page');
+
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            if(event && event.currentTarget.classList.contains('nav-btn')) event.currentTarget.classList.add('active');
+
+            if(event && event.currentTarget.classList.contains('nav-btn')) {
+                event.currentTarget.classList.add('active');
+            }
         }
 
         const DISCORD_API_URL = "https://workspaceapi-server-production-b583.up.railway.app/api/discord/login";
+
         function openPasswordModal() {
             document.getElementById('passwordModal').style.display = 'flex';
             document.getElementById('staffPassword').value = '';
             document.getElementById('passwordError').style.display = 'none';
         }
-        function closePasswordModal() { document.getElementById('passwordModal').style.display = 'none'; }
+
+        function closePasswordModal() {
+            document.getElementById('passwordModal').style.display = 'none';
+        }
+
         function verifyPassword() {
             const pw = document.getElementById('staffPassword').value;
+
             if (pw === "MJ-43325") {
                 window.location.href = DISCORD_API_URL;
             } else {
                 document.getElementById('passwordError').style.display = 'block';
+
                 const modal = document.querySelector('.modal-content');
+
                 modal.classList.add('shake');
+
                 setTimeout(() => modal.classList.remove('shake'), 400);
             }
         }
