@@ -40,6 +40,11 @@
                 لوحة التحكم الخاصة بالقيادة
             </button>
 
+            <button id="announcementsNavBtn" onclick="showPage(event,'announcements-page')" class="nav-btn">
+                <i class="fa-solid fa-bullhorn"></i>
+                التعميمات والاخبار
+            </button>
+
             <button onclick="toggleDarkMode()" class="nav-btn theme-toggle">
                 <i id="themeIcon" class="fa-solid fa-moon"></i>
             </button>
@@ -189,7 +194,7 @@
             </div>
 
             <h1>لوحة التحكم الخاصة بالقيادة</h1>
-            <p>تظهر هنا جميع طلبات إنشاء الحساب، مع إمكانية قبولها أو رفضها.</p>
+            <p>تظهر هنا جميع طلبات إنشاء الحساب، مع إمكانية قبولها أو رفضها، وإضافة التعميمات والأخبار.</p>
         </div>
 
         <div class="container">
@@ -228,6 +233,65 @@
                     لا توجد طلبات حالياً.
                 </div>
             </div>
+
+            <div class="staff-table-card composer-card">
+                <div class="section-head">
+                    <div>
+                        <h2>إضافة خبر في صفحة التعميمات</h2>
+                        <p>اكتب العنوان والتعميم أو الخبر كاملًا ثم أرسله مباشرة.</p>
+                    </div>
+                    <i class="fa-solid fa-bullhorn"></i>
+                </div>
+
+                <form id="announcementForm" class="announcement-form">
+                    <div class="field-group">
+                        <label for="announcementTitle">عنوان الخبر</label>
+                        <input type="text" id="announcementTitle" maxlength="120" placeholder="مثال: تعميم إداري عاجل" required>
+                    </div>
+
+                    <div class="field-group">
+                        <label for="announcementMessage">نص التعميم / الخبر</label>
+                        <textarea
+                            id="announcementMessage"
+                            rows="8"
+                            placeholder="اكتب الخبر أو التعميم كاملًا هنا..."
+                            required
+                        ></textarea>
+                    </div>
+
+                    <p id="announcementSuccess" class="success-msg">
+                        <i class="fa-solid fa-circle-check"></i>
+                        تم نشر التعميم بنجاح
+                    </p>
+
+                    <button type="submit" class="primary-btn">
+                        إرسال التعميم
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section id="announcements-page" class="page">
+        <div class="staff-page-hero">
+            <div class="staff-breadcrumbs">
+                <span>
+                    <i class="fa-solid fa-house"></i>
+                    الصفحة الرئيسية
+                </span>
+                <i class="fa-solid fa-chevron-left"></i>
+                <span>التعميمات والاخبار</span>
+            </div>
+
+            <h1>التعميمات والاخبار</h1>
+            <p>هنا يتم عرض جميع التعميمات والأخبار المنشورة من القيادة.</p>
+        </div>
+
+        <div class="container">
+            <div id="announcementsList" class="announcements-grid"></div>
+            <div id="announcementsEmptyState" class="staff-empty">
+                لا توجد تعميمات أو أخبار حالياً.
+            </div>
         </div>
     </section>
 
@@ -263,6 +327,7 @@
         const STORAGE_KEYS = {
             requests: 'justice_requests',
             accounts: 'justice_accounts',
+            announcements: 'justice_announcements',
             session: 'justice_session',
             pending: 'justice_pending_request_id',
             theme: 'justice_theme',
@@ -330,6 +395,15 @@
 
         function saveAccounts(list) {
             localStorage.setItem(STORAGE_KEYS.accounts, JSON.stringify(list));
+        }
+
+        function getAnnouncements() {
+            const raw = safeParse(localStorage.getItem(STORAGE_KEYS.announcements), []);
+            return Array.isArray(raw) ? raw : [];
+        }
+
+        function saveAnnouncements(list) {
+            localStorage.setItem(STORAGE_KEYS.announcements, JSON.stringify(list));
         }
 
         function getSession() {
@@ -406,9 +480,20 @@
             };
         }
 
+        function normalizeAnnouncement(item) {
+            if (!item || typeof item !== 'object') return null;
+            return {
+                id: String(item.id || uid()),
+                title: String(item.title || ''),
+                message: String(item.message || ''),
+                createdAt: Number(item.createdAt || Date.now())
+            };
+        }
+
         function repairDataModel() {
             let requests = getRequests().map(normalizeRequest).filter(Boolean);
             let accounts = getAccounts().map(normalizeAccount).filter(Boolean);
+            let announcements = getAnnouncements().map(normalizeAnnouncement).filter(Boolean);
 
             const legacyPending = safeParse(localStorage.getItem('justice_pending_application'), null);
             if (!localStorage.getItem(STORAGE_KEYS.pending) && legacyPending && legacyPending.requestId) {
@@ -442,8 +527,13 @@
                 }
             }
 
+            announcements = announcements
+                .filter(item => item.title.trim() || item.message.trim())
+                .sort((a, b) => b.createdAt - a.createdAt);
+
             saveRequests(requests);
             saveAccounts(accounts);
+            saveAnnouncements(announcements);
         }
 
         function setActiveNav(pageId) {
@@ -452,7 +542,8 @@
             const map = {
                 'home-page': 'homeNavBtn',
                 'login-page': 'loginNavBtn',
-                'leadership-page': 'leadershipNavBtn'
+                'leadership-page': 'leadershipNavBtn',
+                'announcements-page': 'announcementsNavBtn'
             };
 
             const btnId = map[pageId];
@@ -475,6 +566,8 @@
                 renderLeadershipDashboard();
             } else if (pageId === 'home-page') {
                 renderStatusCard();
+            } else if (pageId === 'announcements-page') {
+                renderAnnouncementsPage();
             }
         }
 
@@ -799,6 +892,42 @@
             });
         }
 
+        function renderAnnouncementsPage() {
+            const list = getAnnouncements()
+                .slice()
+                .sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+
+            const container = qs('announcementsList');
+            const emptyState = qs('announcementsEmptyState');
+
+            container.innerHTML = '';
+
+            if (!list.length) {
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            emptyState.style.display = 'none';
+
+            list.forEach(item => {
+                const card = document.createElement('article');
+                card.className = 'announcement-card-item';
+                card.innerHTML = `
+                    <div class="announcement-card-head">
+                        <div>
+                            <h3>${escapeHtml(item.title)}</h3>
+                            <span>${formatDate(item.createdAt)}</span>
+                        </div>
+                        <i class="fa-solid fa-bullhorn"></i>
+                    </div>
+                    <div class="announcement-card-body">
+                        ${escapeHtml(item.message).replaceAll('\n', '<br>')}
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
         function approveRequest(requestId) {
             const requests = getRequests();
             const idx = requests.findIndex(item => item.id === requestId);
@@ -957,6 +1086,38 @@
             showPage(null, 'home-page');
         }
 
+        function handleAnnouncementSubmit(event) {
+            event.preventDefault();
+
+            const title = qs('announcementTitle').value.trim();
+            const message = qs('announcementMessage').value.trim();
+            const success = qs('announcementSuccess');
+
+            if (!title || !message) {
+                success.style.display = 'none';
+                return;
+            }
+
+            const announcements = getAnnouncements();
+            announcements.push({
+                id: uid(),
+                title,
+                message,
+                createdAt: Date.now()
+            });
+
+            saveAnnouncements(announcements);
+
+            qs('announcementForm').reset();
+            success.style.display = 'block';
+
+            renderAnnouncementsPage();
+
+            window.setTimeout(() => {
+                success.style.display = 'none';
+            }, 2500);
+        }
+
         function initTheme() {
             const theme = localStorage.getItem(STORAGE_KEYS.theme);
 
@@ -1003,9 +1164,11 @@
             repairDataModel();
             initTheme();
             renderStatusCard();
+            renderAnnouncementsPage();
 
             qs('signupForm').addEventListener('submit', handleSignupSubmit);
             qs('loginForm').addEventListener('submit', handleLoginSubmit);
+            qs('announcementForm').addEventListener('submit', handleAnnouncementSubmit);
 
             const pendingId = getPendingRequestId();
             if (pendingId && !findRequestById(pendingId)) {
