@@ -35,6 +35,16 @@
                 تسجيل الدخول
             </button>
 
+            <button id="editDataNavBtn" onclick="showPage(event,'edit-data-page')" class="nav-btn">
+                <i class="fa-solid fa-pen-to-square"></i>
+                طلب تعديل البيانات
+            </button>
+
+            <button id="complaintNavBtn" onclick="showPage(event,'complaint-page')" class="nav-btn">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                رفع شكوى
+            </button>
+
             <button id="leadershipNavBtn" onclick="showPage(event,'leadership-page')" class="nav-btn">
                 <i class="fa-solid fa-user-gear"></i>
                 لوحة التحكم الخاصة بالقيادة
@@ -42,7 +52,7 @@
 
             <button id="announcementsNavBtn" onclick="showPage(event,'announcements-page')" class="nav-btn">
                 <i class="fa-solid fa-bullhorn"></i>
-                التعميمات والاخبار
+                التعميمات والأخبار
             </button>
 
             <button onclick="toggleDarkMode()" class="nav-btn theme-toggle">
@@ -56,7 +66,24 @@
             <h1>أهلاً بك في موقع وزارة العدل KR</h1>
             <div class="hero-divider"></div>
             <p class="hero-subtitle">نظام داخلي لإدارة الطلبات، اعتماد الحسابات، وعرض حالة العضوية.</p>
-        </div>
+
+            <div class="hero-actions">
+
+    <button
+        type="button"
+        class="hero-link-btn"
+        onclick="openHomeLink(1)">
+        جدول الوزارة الرسمي
+    </button>
+
+    <button
+        type="button"
+        class="hero-link-btn secondary"
+        onclick="openHomeLink(2)">
+        جدول خدمة الدَّين
+    </button>
+
+</div>
 
         <div class="container">
             <div id="statusCard" class="status-card"></div>
@@ -182,6 +209,178 @@
         </div>
     </section>
 
+    <section id="edit-data-page" class="page">
+        <div class="staff-page-hero">
+            <div class="staff-breadcrumbs">
+                <span><i class="fa-solid fa-house"></i> الصفحة الرئيسية</span>
+                <i class="fa-solid fa-chevron-left"></i>
+                <span>طلب تعديل البيانات</span>
+            </div>
+
+            <h1>طلب تعديل البيانات</h1>
+            <p>يمكنك طلب تعديل الاسم أو الرتبة أو يوزر الدسكورد أو كلمة المرور، ثم تتم مراجعة الطلب من القيادة.</p>
+        </div>
+
+        <div class="login-container">
+            <div class="login-box auth-box wide-box">
+                <form id="editRequestForm" class="auth-form">
+                    <div class="edit-note">
+                        <i class="fa-solid fa-circle-info"></i>
+                        أدخل بياناتك الحالية أولاً، ثم عدّل ما تريد. أي حقل جديد تتركه فارغًا سيبقى كما هو.
+                    </div>
+
+                    <div class="field-group">
+                        <label for="editCurrentDiscord">يوزر الدسكورد الحالي</label>
+                        <input type="text" id="editCurrentDiscord" placeholder="أدخل يوزر الدسكورد الحالي" required>
+                    </div>
+
+                    <div class="field-group">
+                        <label for="editCurrentPassword">كلمة المرور الحالية</label>
+                        <input type="password" id="editCurrentPassword" placeholder="أدخل كلمة المرور الحالية" required>
+                    </div>
+
+                    <div class="edit-grid">
+                        <div class="field-group">
+                            <label for="editNewRealName">الاسم الجديد</label>
+                            <input type="text" id="editNewRealName" placeholder="اتركه فارغًا للإبقاء على الاسم الحالي">
+                        </div>
+
+                        <div class="field-group">
+                            <label for="editNewRank">الرتبة الجديدة</label>
+                            <input type="text" id="editNewRank" placeholder="اتركه فارغًا للإبقاء على الرتبة الحالية">
+                        </div>
+
+                        <div class="field-group">
+                            <label for="editNewDiscordUsername">يوزر الدسكورد الجديد</label>
+                            <input type="text" id="editNewDiscordUsername" placeholder="اتركه فارغًا للإبقاء على اليوزر الحالي">
+                        </div>
+
+                        <div class="field-group">
+                            <label for="editNewPassword">كلمة المرور الجديدة</label>
+                            <input type="password" id="editNewPassword" placeholder="اتركه فارغًا للإبقاء على كلمة المرور الحالية">
+                        </div>
+                    </div>
+
+                    <p id="editRequestError" class="error-msg">
+                        <i class="fa-solid fa-circle-exclamation"></i>
+                        تعذر إنشاء الطلب، تأكد من البيانات الحالية وعدم وجود تعارض في البيانات الجديدة
+                    </p>
+
+                    <p id="editRequestSuccess" class="success-msg">
+                        <i class="fa-solid fa-circle-check"></i>
+                        تم إرسال طلب تعديل البيانات بنجاح
+                    </p>
+
+                    <button type="submit" class="primary-btn">
+                        إرسال طلب التعديل
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="complaint-page" class="page">
+        <div class="staff-page-hero">
+            <div class="staff-breadcrumbs">
+                <span><i class="fa-solid fa-house"></i> الصفحة الرئيسية</span>
+                <i class="fa-solid fa-chevron-left"></i>
+                <span>رفع شكوى</span>
+            </div>
+
+            <h1>رفع شكوى</h1>
+            <p>ادخل بيانات حسابك أولًا، ثم املأ نموذج الشكوى ليصل إلى لائحة القيادة.</p>
+        </div>
+
+        <div class="login-container">
+            <div class="login-box auth-box wide-box">
+                <div id="complaintUnlockPanel">
+                    <div class="login-header">
+                        <i class="fa-solid fa-file-circle-exclamation"></i>
+                        <h1>الدخول إلى الشكاوى</h1>
+                    </div>
+
+                    <p class="auth-note">
+                        يجب إدخال يوزر الدسكورد وكلمة مرور الحساب للوصول إلى نموذج رفع الشكوى.
+                    </p>
+
+                    <form id="complaintUnlockForm" class="auth-form">
+                        <div class="field-group">
+                            <label for="complaintUnlockDiscord">يوزر الدسكورد</label>
+                            <input type="text" id="complaintUnlockDiscord" autocomplete="username" placeholder="أدخل يوزر الدسكورد" required>
+                        </div>
+
+                        <div class="field-group">
+                            <label for="complaintUnlockPassword">كلمة المرور</label>
+                            <input type="password" id="complaintUnlockPassword" autocomplete="current-password" placeholder="أدخل كلمة المرور" required>
+                        </div>
+
+                        <p id="complaintUnlockError" class="error-msg">
+                            <i class="fa-solid fa-circle-exclamation"></i>
+                            بيانات الدخول غير صحيحة
+                        </p>
+
+                        <button type="submit" class="primary-btn">
+                            فتح نموذج الشكوى
+                        </button>
+                    </form>
+                </div>
+
+                <div id="complaintFormPanel" style="display:none;">
+                    <div class="login-header">
+                        <i class="fa-solid fa-clipboard-list"></i>
+                        <h1>نموذج رفع شكوى</h1>
+                    </div>
+
+                    <p class="auth-note">
+                        اكتب بيانات الشكوى بدقة، وسيتم إرسالها إلى القيادة للمراجعة.
+                    </p>
+
+                    <form id="complaintForm" class="auth-form">
+                        <div class="field-group">
+                            <label for="complaintDiscordUsername">يوزر حسابك الدسكورد</label>
+                            <input type="text" id="complaintDiscordUsername" readonly>
+                        </div>
+
+                        <div class="field-group">
+                            <label for="complaintRobloxUsername">يوزر حسابك روبلوكس</label>
+                            <input type="text" id="complaintRobloxUsername" placeholder="أدخل يوزر روبلوكس" required>
+                        </div>
+
+                        <div class="field-group">
+                            <label for="complaintAccusedUsername">يوزر حساب الموظف المشتكى عليه</label>
+                            <input type="text" id="complaintAccusedUsername" placeholder="أدخل يوزر الموظف" required>
+                        </div>
+
+                        <div class="field-group">
+                            <label for="complaintReason">سبب الشكوى بالتفصيل</label>
+                            <textarea id="complaintReason" rows="7" placeholder="اكتب سبب الشكوى بالكامل" required></textarea>
+                        </div>
+
+                        <div class="field-group">
+                            <label for="complaintEvidence">الأدلة</label>
+                            <textarea id="complaintEvidence" rows="6" placeholder="أضف الأدلة أو الروابط أو التفاصيل" required></textarea>
+                        </div>
+
+                        <p id="complaintSuccess" class="success-msg">
+                            <i class="fa-solid fa-circle-check"></i>
+                            تم إرسال الشكوى بنجاح
+                        </p>
+
+                        <p id="complaintError" class="error-msg">
+                            <i class="fa-solid fa-circle-exclamation"></i>
+                            تعذر إرسال الشكوى
+                        </p>
+
+                        <button type="submit" class="primary-btn">
+                            إرسال الشكوى
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section id="leadership-page" class="page">
         <div class="staff-page-hero">
             <div class="staff-breadcrumbs">
@@ -194,7 +393,7 @@
             </div>
 
             <h1>لوحة التحكم الخاصة بالقيادة</h1>
-            <p>تظهر هنا جميع طلبات إنشاء الحساب، مع إمكانية قبولها أو رفضها، وإضافة التعميمات والأخبار.</p>
+            <p>تظهر هنا جميع الطلبات، مع إمكانية قبولها أو رفضها، وإدارة طلبات تعديل الحسابات، وإضافة التعميمات والأخبار.</p>
         </div>
 
         <div class="container">
@@ -213,6 +412,14 @@
             <div class="dashboard-stats" id="dashboardStats"></div>
 
             <div class="staff-table-card">
+                <div class="section-head">
+                    <div>
+                        <h2>طلبات إنشاء الحسابات</h2>
+                        <p>جميع طلبات إنشاء الحسابات مع الإجراء المناسب.</p>
+                    </div>
+                    <i class="fa-solid fa-users-gear"></i>
+                </div>
+
                 <div class="table-scroll">
                     <table class="staff-table">
                         <thead>
@@ -231,6 +438,121 @@
 
                 <div id="requestsEmptyState" class="staff-empty">
                     لا توجد طلبات حالياً.
+                </div>
+            </div>
+
+            <div class="dashboard-tools second-search">
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input
+                        type="text"
+                        id="leadershipEditSearch"
+                        placeholder="ابحث في طلبات تعديل الحسابات..."
+                        oninput="renderLeadershipDashboard()"
+                    >
+                </div>
+            </div>
+
+            <div class="staff-table-card">
+                <div class="section-head">
+                    <div>
+                        <h2>طلبات تعديل الحسابات</h2>
+                        <p>يتم عرض البيانات القديمة والجديدة للمقارنة قبل القبول أو الرفض.</p>
+                    </div>
+                    <i class="fa-solid fa-pen-to-square"></i>
+                </div>
+
+                <div class="table-scroll">
+                    <table class="staff-table edit-table">
+                        <thead>
+                            <tr>
+                                <th>الاسم</th>
+                                <th>الرتبة</th>
+                                <th>يوزر الدسكورد</th>
+                                <th>كلمة المرور</th>
+                                <th>الحالة</th>
+                                <th>الإجراء</th>
+                            </tr>
+                        </thead>
+                        <tbody id="editRequestsTableBody"></tbody>
+                    </table>
+                </div>
+
+                <div id="editRequestsEmptyState" class="staff-empty">
+                    لا توجد طلبات تعديل حالياً.
+                </div>
+            </div>
+
+            <div class="staff-table-card">
+                <div class="section-head">
+                    <div>
+                        <h2>الحسابات المقبولة</h2>
+                        <p>يمكن حذف الحسابات المقبولة من هنا، وعند حذفها يمكن إنشاء حساب جديد بنفس البيانات لاحقًا.</p>
+                    </div>
+                    <i class="fa-solid fa-user-check"></i>
+                </div>
+
+                <div class="table-scroll">
+                    <table class="staff-table approved-table">
+                        <thead>
+                            <tr>
+                                <th>الاسم الحقيقي</th>
+                                <th>الرتبة</th>
+                                <th>كلمة المرور</th>
+                                <th>يوزر الدسكورد</th>
+                                <th>الإجراء</th>
+                            </tr>
+                        </thead>
+                        <tbody id="approvedAccountsTableBody"></tbody>
+                    </table>
+                </div>
+
+                <div id="approvedAccountsEmptyState" class="staff-empty">
+                    لا توجد حسابات مقبولة حالياً.
+                </div>
+            </div>
+
+
+            <div class="dashboard-tools second-search">
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input
+                        type="text"
+                        id="leadershipComplaintSearch"
+                        placeholder="ابحث في الشكاوى..."
+                        oninput="renderLeadershipDashboard()"
+                    >
+                </div>
+            </div>
+
+            <div class="staff-table-card">
+                <div class="section-head">
+                    <div>
+                        <h2>الشكاوى</h2>
+                        <p>جميع الشكاوى المرسلة من الموظفين مع كامل البيانات.</p>
+                    </div>
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                </div>
+
+                <div class="table-scroll">
+                    <table class="staff-table complaint-table">
+                        <thead>
+                            <tr>
+                                <th>يوزر الدسكورد</th>
+                                <th>يوزر روبلوكس</th>
+                                <th>المشتكى عليه</th>
+                                <th>سبب الشكوى</th>
+                                <th>الأدلة</th>
+                                <th>الحالة</th>
+                                <th>الإجراء</th>
+                            </tr>
+                        </thead>
+                        <tbody id="complaintsTableBody"></tbody>
+                    </table>
+                </div>
+
+                <div id="complaintsEmptyState" class="staff-empty">
+                    لا توجد شكاوى حالياً.
                 </div>
             </div>
 
@@ -280,18 +602,17 @@
                     الصفحة الرئيسية
                 </span>
                 <i class="fa-solid fa-chevron-left"></i>
-                <span>التعميمات والاخبار</span>
+                <span>التعميمات والأخبار</span>
             </div>
 
-            <h1>التعميمات والاخبار</h1>
+            <h1>التعميمات والأخبار</h1>
             <p>هنا يتم عرض جميع التعميمات والأخبار المنشورة من القيادة.</p>
         </div>
 
-        <div class="container">
-            <div id="announcementsList" class="announcements-grid"></div>
-            <div id="announcementsEmptyState" class="staff-empty">
-                لا توجد تعميمات أو أخبار حالياً.
-            </div>
+        <div class="news-container" id="announcementsContainer"></div>
+
+        <div id="announcementsEmptyState" class="news-empty">
+            لا توجد تعميمات أو أخبار حالياً.
         </div>
     </section>
 
@@ -326,15 +647,22 @@
     <script>
         const STORAGE_KEYS = {
             requests: 'justice_requests',
+            editRequests: 'justice_edit_requests',
+            complaints: 'justice_complaints',
             accounts: 'justice_accounts',
             announcements: 'justice_announcements',
             session: 'justice_session',
             pending: 'justice_pending_request_id',
+            complaintUnlocked: 'justice_complaint_unlocked_account_id',
             theme: 'justice_theme',
             leadershipUnlocked: 'justice_leadership_unlocked'
         };
 
         const LEADERSHIP_PASSWORD = '1111';
+        const HOME_LINKS = {
+            button1: '',
+            button2: ''
+        };
 
         function qs(id) {
             return document.getElementById(id);
@@ -379,6 +707,52 @@
             return 'id-' + Date.now() + '-' + Math.random().toString(16).slice(2);
         }
 
+        let notificationAudioContext = null;
+
+        function playNotificationSound(type = 'success') {
+            const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+            if (!AudioContextClass) return;
+
+            if (!notificationAudioContext) {
+                notificationAudioContext = new AudioContextClass();
+            }
+
+            const context = notificationAudioContext;
+            if (context.state === 'suspended') {
+                context.resume().catch(() => {});
+            }
+
+            const now = context.currentTime;
+            const oscillator = context.createOscillator();
+            const gainNode = context.createGain();
+
+            oscillator.type = 'sine';
+            oscillator.frequency.setValueAtTime(type === 'success' ? 880 : 220, now);
+            oscillator.frequency.exponentialRampToValueAtTime(type === 'success' ? 1320 : 160, now + 0.18);
+
+            gainNode.gain.setValueAtTime(0.0001, now);
+            gainNode.gain.exponentialRampToValueAtTime(0.08, now + 0.02);
+            gainNode.gain.exponentialRampToValueAtTime(0.0001, now + 0.22);
+
+            oscillator.connect(gainNode);
+            gainNode.connect(context.destination);
+
+            oscillator.start(now);
+            oscillator.stop(now + 0.24);
+        }
+
+       function openHomeLink(id) {
+    if (id === 1) {
+        window.location.href = "https://docs.google.com/spreadsheets/d/1cwuK7znBsHtsLI7o2_DABl-yKtzjqnpeHB_MSeYZu_I/edit?gid=1495034880#gid=1495034880";
+    } else if (id === 2) {
+        window.location.href = "https://docs.google.com/spreadsheets/d/1-6C9jgnEwD0GZqAm3AmQJKE-61uJnIGxK_5h6L6Gb9I/edit?usp=sharing";
+    }
+}
+
+        function normalizeText(value) {
+            return String(value ?? '').trim().toLowerCase();
+        }
+
         function getRequests() {
             const raw = safeParse(localStorage.getItem(STORAGE_KEYS.requests), []);
             return Array.isArray(raw) ? raw : [];
@@ -386,6 +760,15 @@
 
         function saveRequests(list) {
             localStorage.setItem(STORAGE_KEYS.requests, JSON.stringify(list));
+        }
+
+        function getEditRequests() {
+            const raw = safeParse(localStorage.getItem(STORAGE_KEYS.editRequests), []);
+            return Array.isArray(raw) ? raw : [];
+        }
+
+        function saveEditRequests(list) {
+            localStorage.setItem(STORAGE_KEYS.editRequests, JSON.stringify(list));
         }
 
         function getAccounts() {
@@ -404,6 +787,15 @@
 
         function saveAnnouncements(list) {
             localStorage.setItem(STORAGE_KEYS.announcements, JSON.stringify(list));
+        }
+
+        function getComplaints() {
+            const raw = safeParse(localStorage.getItem(STORAGE_KEYS.complaints), []);
+            return Array.isArray(raw) ? raw : [];
+        }
+
+        function saveComplaints(list) {
+            localStorage.setItem(STORAGE_KEYS.complaints, JSON.stringify(list));
         }
 
         function getSession() {
@@ -446,10 +838,14 @@
         }
 
         function findAccountByUsername(username) {
-            const normalized = String(username || '').trim().toLowerCase();
+            const normalized = normalizeText(username);
             return getAccounts().find(item =>
-                String(item.discordUsername || '').trim().toLowerCase() === normalized
+                normalizeText(item.discordUsername) === normalized
             ) || null;
+        }
+
+        function findAccountById(accountId) {
+            return getAccounts().find(item => item.id === accountId) || null;
         }
 
         function normalizeRequest(item) {
@@ -480,20 +876,78 @@
             };
         }
 
-        function normalizeAnnouncement(item) {
+        function normalizeEditRequest(item) {
             if (!item || typeof item !== 'object') return null;
             return {
                 id: String(item.id || uid()),
-                title: String(item.title || ''),
-                message: String(item.message || ''),
-                createdAt: Number(item.createdAt || Date.now())
+                accountId: String(item.accountId || ''),
+                oldRealName: String(item.oldRealName || ''),
+                oldRank: String(item.oldRank || ''),
+                oldPassword: String(item.oldPassword || ''),
+                oldDiscordUsername: String(item.oldDiscordUsername || ''),
+                newRealName: String(item.newRealName || ''),
+                newRank: String(item.newRank || ''),
+                newPassword: String(item.newPassword || ''),
+                newDiscordUsername: String(item.newDiscordUsername || ''),
+                status: ['pending', 'approved', 'rejected'].includes(item.status) ? item.status : 'pending',
+                createdAt: Number(item.createdAt || Date.now()),
+                approvedAt: item.approvedAt ? Number(item.approvedAt) : null,
+                rejectedAt: item.rejectedAt ? Number(item.rejectedAt) : null
             };
+        }
+
+        function normalizeComplaint(item) {
+            if (!item || typeof item !== 'object') return null;
+            return {
+                id: String(item.id || uid()),
+                accountId: String(item.accountId || ''),
+                discordUsername: String(item.discordUsername || ''),
+                robloxUsername: String(item.robloxUsername || ''),
+                accusedUsername: String(item.accusedUsername || ''),
+                reason: String(item.reason || ''),
+                evidence: String(item.evidence || ''),
+                status: ['pending', 'approved', 'rejected'].includes(item.status) ? item.status : 'pending',
+                createdAt: Number(item.createdAt || Date.now()),
+                approvedAt: item.approvedAt ? Number(item.approvedAt) : null,
+                rejectedAt: item.rejectedAt ? Number(item.rejectedAt) : null
+            };
+        }
+
+        function getLatestEditRequestForAccount(accountId) {
+            const list = getEditRequests()
+                .filter(item => item.accountId === accountId)
+                .sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+
+            return list[0] || null;
+        }
+
+        function getLatestComplaintForAccount(accountId) {
+            const list = getComplaints()
+                .filter(item => item.accountId === accountId)
+                .sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+
+            return list[0] || null;
+        }
+
+        function getCurrentAccountFromSession() {
+            const session = getSession();
+            if (!session) return null;
+            return findAccountByUsername(session.discordUsername);
         }
 
         function repairDataModel() {
             let requests = getRequests().map(normalizeRequest).filter(Boolean);
             let accounts = getAccounts().map(normalizeAccount).filter(Boolean);
-            let announcements = getAnnouncements().map(normalizeAnnouncement).filter(Boolean);
+            let editRequests = getEditRequests().map(normalizeEditRequest).filter(Boolean);
+            let complaints = getComplaints().map(normalizeComplaint).filter(Boolean);
+            let announcements = getAnnouncements().map(item => ({
+                id: String(item.id || uid()),
+                title: String(item.title || ''),
+                message: String(item.message || ''),
+                category: String(item.category || 'عام'),
+                likes: Number(item.likes || 0),
+                createdAt: Number(item.createdAt || Date.now())
+            })).filter(item => item.title.trim() || item.message.trim());
 
             const legacyPending = safeParse(localStorage.getItem('justice_pending_application'), null);
             if (!localStorage.getItem(STORAGE_KEYS.pending) && legacyPending && legacyPending.requestId) {
@@ -511,7 +965,7 @@
             const approvedRequests = requests.filter(item => item.status === 'approved');
             for (const req of approvedRequests) {
                 const exists = accounts.some(acc =>
-                    String(acc.discordUsername || '').trim().toLowerCase() === String(req.discordUsername || '').trim().toLowerCase()
+                    normalizeText(acc.discordUsername) === normalizeText(req.discordUsername)
                 );
 
                 if (!exists) {
@@ -527,12 +981,13 @@
                 }
             }
 
-            announcements = announcements
-                .filter(item => item.title.trim() || item.message.trim())
-                .sort((a, b) => b.createdAt - a.createdAt);
+            complaints = complaints.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+            announcements = announcements.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
 
             saveRequests(requests);
             saveAccounts(accounts);
+            saveEditRequests(editRequests);
+            saveComplaints(complaints);
             saveAnnouncements(announcements);
         }
 
@@ -542,6 +997,8 @@
             const map = {
                 'home-page': 'homeNavBtn',
                 'login-page': 'loginNavBtn',
+                'edit-data-page': 'editDataNavBtn',
+                'complaint-page': 'complaintNavBtn',
                 'leadership-page': 'leadershipNavBtn',
                 'announcements-page': 'announcementsNavBtn'
             };
@@ -568,6 +1025,8 @@
                 renderStatusCard();
             } else if (pageId === 'announcements-page') {
                 renderAnnouncementsPage();
+            } else if (pageId === 'complaint-page') {
+                renderComplaintPage();
             }
         }
 
@@ -596,17 +1055,116 @@
             return findRequestById(pendingId);
         }
 
+        function buildEditNotice(editRequest) {
+            if (!editRequest) return '';
+
+            if (editRequest.status === 'pending') {
+                return `
+                    <div class="account-notice pending">
+                        <div class="account-notice-icon">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </div>
+                        <div>
+                            <h3>طلب تعديل البيانات قيد المراجعة</h3>
+                            <p>تم إرسال طلب تعديل البيانات وينتظر مراجعة القيادة.</p>
+                        </div>
+                    </div>
+                `;
+            }
+
+            if (editRequest.status === 'approved') {
+                return `
+                    <div class="account-notice approved">
+                        <div class="account-notice-icon">
+                            <i class="fa-solid fa-circle-check"></i>
+                        </div>
+                        <div>
+                            <h3>تم قبول طلب تعديل البيانات</h3>
+                            <p>تم تحديث بيانات حسابك بنجاح.</p>
+                        </div>
+                    </div>
+                `;
+            }
+
+            if (editRequest.status === 'rejected') {
+                return `
+                    <div class="account-notice rejected">
+                        <div class="account-notice-icon">
+                            <i class="fa-solid fa-circle-xmark"></i>
+                        </div>
+                        <div>
+                            <h3>تم رفض طلب تعديل البيانات</h3>
+                            <p>تم رفض تعديل بيانات حسابك من القيادة.</p>
+                        </div>
+                    </div>
+                `;
+            }
+
+            return '';
+        }
+
+        function buildComplaintNotice(complaintRequest) {
+            if (!complaintRequest) return '';
+
+            if (complaintRequest.status === 'pending') {
+                return `
+                    <div class="account-notice pending">
+                        <div class="account-notice-icon">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                        </div>
+                        <div>
+                            <h3>الشكوى قيد المراجعة</h3>
+                            <p>تم إرسال الشكوى وهي الآن بانتظار قرار القيادة.</p>
+                        </div>
+                    </div>
+                `;
+            }
+
+            if (complaintRequest.status === 'approved') {
+                return `
+                    <div class="account-notice approved">
+                        <div class="account-notice-icon">
+                            <i class="fa-solid fa-circle-check"></i>
+                        </div>
+                        <div>
+                            <h3>تم قبول الشكوى</h3>
+                            <p>تمت معالجة الشكوى واعتمادها من القيادة.</p>
+                        </div>
+                    </div>
+                `;
+            }
+
+            if (complaintRequest.status === 'rejected') {
+                return `
+                    <div class="account-notice rejected">
+                        <div class="account-notice-icon">
+                            <i class="fa-solid fa-circle-xmark"></i>
+                        </div>
+                        <div>
+                            <h3>تم رفض الشكوى</h3>
+                            <p>تم رفض الشكوى من القيادة.</p>
+                        </div>
+                    </div>
+                `;
+            }
+
+            return '';
+        }
+
         function renderStatusCard() {
             const statusCard = qs('statusCard');
             const session = getSession();
             const request = getCurrentRequestForHome();
 
             if (session) {
-                const account = getAccounts().find(item =>
-                    String(item.discordUsername || '').trim().toLowerCase() === String(session.discordUsername || '').trim().toLowerCase()
-                );
+                const account = getCurrentAccountFromSession();
 
-                if (account) {
+                if (!account) {
+                    clearSession();
+                } else {
+                    const editRequest = getLatestEditRequestForAccount(account.id);
+                    const complaintRequest = getLatestComplaintForAccount(account.id);
+
                     statusCard.className = 'status-card account-card';
                     statusCard.innerHTML = `
                         <div class="status-header success">
@@ -635,6 +1193,9 @@
                                 <strong>${formatDate(account.approvedAt)}</strong>
                             </div>
                         </div>
+
+                        ${buildEditNotice(editRequest)}
+                        ${buildComplaintNotice(complaintRequest)}
 
                         <div class="status-actions">
                             <button class="secondary-btn" onclick="handleLogout()">
@@ -809,87 +1370,347 @@
             });
         }
 
+        function getFilteredEditRequests() {
+            const q = (qs('leadershipEditSearch')?.value || '').trim().toLowerCase();
+
+            const items = getEditRequests()
+                .slice()
+                .sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+
+            if (!q) return items;
+
+            return items.filter(request => {
+                const statusText =
+                    request.status === 'pending' ? 'معلق' :
+                    request.status === 'approved' ? 'مقبول' : 'مرفوض';
+
+                return [
+                    request.oldRealName,
+                    request.newRealName,
+                    request.oldRank,
+                    request.newRank,
+                    request.oldDiscordUsername,
+                    request.newDiscordUsername,
+                    request.oldPassword,
+                    request.newPassword,
+                    statusText
+                ].some(value => String(value ?? '').toLowerCase().includes(q));
+            });
+        }
+
+        function getFilteredApprovedAccounts() {
+            const q = (qs('leadershipSearch')?.value || '').trim().toLowerCase();
+
+            const items = getAccounts()
+                .slice()
+                .sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+
+            if (!q) return items;
+
+            return items.filter(account => {
+                return [
+                    account.realName,
+                    account.rank,
+                    account.password,
+                    account.discordUsername
+                ].some(value => String(value ?? '').toLowerCase().includes(q));
+            });
+        }
+
+        function getFilteredComplaints() {
+            const q = (qs('leadershipComplaintSearch')?.value || '').trim().toLowerCase();
+
+            const items = getComplaints()
+                .slice()
+                .sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+
+            if (!q) return items;
+
+            return items.filter(item => {
+                const statusText =
+                    item.status === 'pending' ? 'معلق' :
+                    item.status === 'approved' ? 'مقبول' : 'مرفوض';
+
+                return [
+                    item.discordUsername,
+                    item.robloxUsername,
+                    item.accusedUsername,
+                    item.reason,
+                    item.evidence,
+                    statusText
+                ].some(value => String(value ?? '').toLowerCase().includes(q));
+            });
+        }
+
         function renderLeadershipDashboard() {
             const allRequests = getRequests();
             const filteredRequests = getFilteredRequests();
+
+            const allEditRequests = getEditRequests();
+            const filteredEditRequests = getFilteredEditRequests();
+
+            const allAccounts = getAccounts();
+            const filteredAccounts = getFilteredApprovedAccounts();
+            const allComplaints = getComplaints();
+            const filteredComplaints = getFilteredComplaints();
+
             const tbody = qs('requestsTableBody');
+            const editTbody = qs('editRequestsTableBody');
+            const approvedTbody = qs('approvedAccountsTableBody');
+            const complaintsTbody = qs('complaintsTableBody');
             const emptyState = qs('requestsEmptyState');
+            const editEmptyState = qs('editRequestsEmptyState');
+            const approvedEmptyState = qs('approvedAccountsEmptyState');
+            const complaintsEmptyState = qs('complaintsEmptyState');
             const dashboardStats = qs('dashboardStats');
 
             const pendingCount = allRequests.filter(item => item.status === 'pending').length;
             const approvedCount = allRequests.filter(item => item.status === 'approved').length;
             const rejectedCount = allRequests.filter(item => item.status === 'rejected').length;
+            const pendingEditCount = allEditRequests.filter(item => item.status === 'pending').length;
+            const approvedAccountsCount = allAccounts.length;
+            const complaintsCount = allComplaints.length;
+            const pendingComplaintsCount = allComplaints.filter(item => item.status === 'pending').length;
 
             dashboardStats.innerHTML = `
                 <div class="mini-stat">
                     <i class="fa-solid fa-list-check"></i>
                     <h3>${allRequests.length}</h3>
-                    <p>إجمالي الطلبات</p>
+                    <p>إجمالي طلبات الحساب</p>
                 </div>
                 <div class="mini-stat">
                     <i class="fa-solid fa-hourglass-half"></i>
                     <h3>${pendingCount}</h3>
-                    <p>طلبات معلقة</p>
+                    <p>طلبات الحساب المعلقة</p>
                 </div>
                 <div class="mini-stat">
                     <i class="fa-solid fa-circle-check"></i>
                     <h3>${approvedCount}</h3>
-                    <p>طلبات مقبولة</p>
+                    <p>طلبات الحساب المقبولة</p>
                 </div>
                 <div class="mini-stat">
                     <i class="fa-solid fa-circle-xmark"></i>
                     <h3>${rejectedCount}</h3>
-                    <p>طلبات مرفوضة</p>
+                    <p>طلبات الحساب المرفوضة</p>
+                </div>
+                <div class="mini-stat">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                    <h3>${pendingEditCount}</h3>
+                    <p>طلبات التعديل المعلقة</p>
+                </div>
+                <div class="mini-stat">
+                    <i class="fa-solid fa-user-check"></i>
+                    <h3>${approvedAccountsCount}</h3>
+                    <p>الحسابات المقبولة</p>
+                </div>
+                <div class="mini-stat">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <h3>${complaintsCount}</h3>
+                    <p>إجمالي الشكاوى</p>
+                </div>
+                <div class="mini-stat">
+                    <i class="fa-solid fa-clock"></i>
+                    <h3>${pendingComplaintsCount}</h3>
+                    <p>الشكاوى المعلقة</p>
                 </div>
             `;
 
             tbody.innerHTML = '';
+            editTbody.innerHTML = '';
+            approvedTbody.innerHTML = '';
 
             if (!filteredRequests.length) {
                 emptyState.style.display = 'block';
                 emptyState.textContent = allRequests.length ? 'لا توجد نتائج مطابقة للبحث.' : 'لا توجد طلبات حالياً.';
-                return;
+            } else {
+                emptyState.style.display = 'none';
+
+                filteredRequests.forEach(request => {
+                    const tr = document.createElement('tr');
+
+                    const statusClass =
+                        request.status === 'pending' ? 'status-badge pending' :
+                        request.status === 'approved' ? 'status-badge approved' :
+                        'status-badge rejected';
+
+                    const statusText =
+                        request.status === 'pending' ? 'معلق' :
+                        request.status === 'approved' ? 'مقبول' : 'مرفوض';
+
+                    let actionHtml = '';
+
+                    if (request.status === 'pending') {
+                        actionHtml = `
+                            <div class="row-actions">
+                                <button class="accept-btn" onclick="approveRequest('${request.id}')">مقبول</button>
+                                <button class="reject-btn" onclick="rejectRequest('${request.id}')">مرفوض</button>
+                            </div>
+                        `;
+                    } else {
+                        actionHtml = `<span class="row-muted">تمت المعالجة</span>`;
+                    }
+
+                    tr.innerHTML = `
+                        <td>
+                            <div class="request-main-cell">
+                                <i class="fa-solid fa-id-card"></i>
+                                <span>${escapeHtml(request.realName)}</span>
+                            </div>
+                        </td>
+                        <td>${escapeHtml(request.rank)}</td>
+                        <td class="monospace">${escapeHtml(request.password)}</td>
+                        <td>${escapeHtml(request.discordUsername)}</td>
+                        <td><span class="${statusClass}">${statusText}</span></td>
+                        <td>${actionHtml}</td>
+                    `;
+
+                    tbody.appendChild(tr);
+                });
             }
 
-            emptyState.style.display = 'none';
+            if (!filteredEditRequests.length) {
+                editEmptyState.style.display = 'block';
+                editEmptyState.textContent = allEditRequests.length ? 'لا توجد نتائج مطابقة للبحث.' : 'لا توجد طلبات تعديل حالياً.';
+            } else {
+                editEmptyState.style.display = 'none';
 
-            filteredRequests.forEach(request => {
-                const tr = document.createElement('tr');
+                filteredEditRequests.forEach(request => {
+                    const tr = document.createElement('tr');
 
-                const statusClass =
-                    request.status === 'pending' ? 'status-badge pending' :
-                    request.status === 'approved' ? 'status-badge approved' :
-                    'status-badge rejected';
+                    const statusClass =
+                        request.status === 'pending' ? 'status-badge pending' :
+                        request.status === 'approved' ? 'status-badge approved' :
+                        'status-badge rejected';
 
-                const statusText =
-                    request.status === 'pending' ? 'معلق' :
-                    request.status === 'approved' ? 'مقبول' : 'مرفوض';
+                    const statusText =
+                        request.status === 'pending' ? 'معلق' :
+                        request.status === 'approved' ? 'مقبول' : 'مرفوض';
 
-                const actionHtml = request.status === 'pending'
-                    ? `
-                        <div class="row-actions">
-                            <button class="accept-btn" onclick="approveRequest('${request.id}')">مقبول</button>
-                            <button class="reject-btn" onclick="rejectRequest('${request.id}')">مرفوض</button>
-                        </div>
-                    `
-                    : `<span class="row-muted">تمت المعالجة</span>`;
+                    let actionHtml = '';
 
-                tr.innerHTML = `
-                    <td>
-                        <div class="request-main-cell">
-                            <i class="fa-solid fa-id-card"></i>
-                            <span>${escapeHtml(request.realName)}</span>
-                        </div>
-                    </td>
-                    <td>${escapeHtml(request.rank)}</td>
-                    <td class="monospace">${escapeHtml(request.password)}</td>
-                    <td>${escapeHtml(request.discordUsername)}</td>
-                    <td><span class="${statusClass}">${statusText}</span></td>
-                    <td>${actionHtml}</td>
-                `;
+                    if (request.status === 'pending') {
+                        actionHtml = `
+                            <div class="row-actions">
+                                <button class="accept-btn" onclick="approveEditRequest('${request.id}')">مقبول</button>
+                                <button class="reject-btn" onclick="rejectEditRequest('${request.id}')">مرفوض</button>
+                            </div>
+                        `;
+                    } else {
+                        actionHtml = `<span class="row-muted">تمت المعالجة</span>`;
+                    }
 
-                tbody.appendChild(tr);
-            });
+                    tr.innerHTML = `
+                        <td>
+                            <div class="compare-cell">
+                                <span class="compare-tag old">قديم</span>
+                                <strong>${escapeHtml(request.oldRealName)}</strong>
+                                <span class="compare-tag new">جديد</span>
+                                <strong>${escapeHtml(request.newRealName)}</strong>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="compare-cell">
+                                <span class="compare-tag old">قديم</span>
+                                <strong>${escapeHtml(request.oldRank)}</strong>
+                                <span class="compare-tag new">جديد</span>
+                                <strong>${escapeHtml(request.newRank)}</strong>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="compare-cell">
+                                <span class="compare-tag old">قديم</span>
+                                <strong class="monospace">${escapeHtml(request.oldDiscordUsername)}</strong>
+                                <span class="compare-tag new">جديد</span>
+                                <strong class="monospace">${escapeHtml(request.newDiscordUsername)}</strong>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="compare-cell">
+                                <span class="compare-tag old">قديم</span>
+                                <strong class="monospace">${escapeHtml(request.oldPassword)}</strong>
+                                <span class="compare-tag new">جديد</span>
+                                <strong class="monospace">${escapeHtml(request.newPassword)}</strong>
+                            </div>
+                        </td>
+                        <td><span class="${statusClass}">${statusText}</span></td>
+                        <td>${actionHtml}</td>
+                    `;
+
+                    editTbody.appendChild(tr);
+                });
+            }
+
+            if (!filteredAccounts.length) {
+                approvedEmptyState.style.display = 'block';
+                approvedEmptyState.textContent = allAccounts.length ? 'لا توجد نتائج مطابقة للبحث.' : 'لا توجد حسابات مقبولة حالياً.';
+            } else {
+                approvedEmptyState.style.display = 'none';
+
+                filteredAccounts.forEach(account => {
+                    const tr = document.createElement('tr');
+
+                    tr.innerHTML = `
+                        <td>
+                            <div class="request-main-cell">
+                                <i class="fa-solid fa-user"></i>
+                                <span>${escapeHtml(account.realName)}</span>
+                            </div>
+                        </td>
+                        <td>${escapeHtml(account.rank)}</td>
+                        <td class="monospace">${escapeHtml(account.password)}</td>
+                        <td>${escapeHtml(account.discordUsername)}</td>
+                        <td>
+                            <div class="row-actions">
+                                <button class="delete-btn" onclick="deleteApprovedAccount('${account.id}')">
+                                    حذف الحساب
+                                </button>
+                            </div>
+                        </td>
+                    `;
+
+                    approvedTbody.appendChild(tr);
+                });
+            }
+
+            if (!filteredComplaints.length) {
+                complaintsEmptyState.style.display = 'block';
+                complaintsEmptyState.textContent = allComplaints.length ? 'لا توجد نتائج مطابقة للبحث.' : 'لا توجد شكاوى حالياً.';
+            } else {
+                complaintsEmptyState.style.display = 'none';
+
+                filteredComplaints.forEach(item => {
+                    const tr = document.createElement('tr');
+                    const statusClass =
+                        item.status === 'pending' ? 'status-badge pending' :
+                        item.status === 'approved' ? 'status-badge approved' :
+                        'status-badge rejected';
+
+                    const statusText =
+                        item.status === 'pending' ? 'معلق' :
+                        item.status === 'approved' ? 'مقبول' : 'مرفوض';
+
+                    const actionHtml = item.status === 'pending'
+                        ? `
+                            <div class="row-actions">
+                                <button class="accept-btn" onclick="approveComplaint('${item.id}')">مقبول</button>
+                                <button class="reject-btn" onclick="rejectComplaint('${item.id}')">مرفوض</button>
+                            </div>
+                        `
+                        : `<span class="row-muted">تمت المعالجة</span>`;
+
+                    tr.innerHTML = `
+                        <td>${escapeHtml(item.discordUsername)}</td>
+                        <td>${escapeHtml(item.robloxUsername)}</td>
+                        <td>${escapeHtml(item.accusedUsername)}</td>
+                        <td class="complaint-text">${escapeHtml(item.reason)}</td>
+                        <td class="complaint-text">${escapeHtml(item.evidence)}</td>
+                        <td><span class="${statusClass}">${statusText}</span></td>
+                        <td>${actionHtml}</td>
+                    `;
+
+                    complaintsTbody.appendChild(tr);
+                });
+            }
         }
 
         function renderAnnouncementsPage() {
@@ -897,7 +1718,7 @@
                 .slice()
                 .sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
 
-            const container = qs('announcementsList');
+            const container = qs('announcementsContainer');
             const emptyState = qs('announcementsEmptyState');
 
             container.innerHTML = '';
@@ -911,18 +1732,12 @@
 
             list.forEach(item => {
                 const card = document.createElement('article');
-                card.className = 'announcement-card-item';
+                card.className = 'news-card';
                 card.innerHTML = `
-                    <div class="announcement-card-head">
-                        <div>
-                            <h3>${escapeHtml(item.title)}</h3>
-                            <span>${formatDate(item.createdAt)}</span>
-                        </div>
-                        <i class="fa-solid fa-bullhorn"></i>
-                    </div>
-                    <div class="announcement-card-body">
-                        ${escapeHtml(item.message).replaceAll('\n', '<br>')}
-                    </div>
+                    <div class="news-date">${formatDate(item.createdAt)}</div>
+
+                    <h2 class="news-title">${escapeHtml(item.title)}</h2>
+                    <div class="news-description">${escapeHtml(item.message).replaceAll('\\n', '<br>')}</div>
                 `;
                 container.appendChild(card);
             });
@@ -940,10 +1755,11 @@
             request.approvedAt = Date.now();
             requests[idx] = request;
             saveRequests(requests);
+            playNotificationSound('success');
 
             const accounts = getAccounts();
             const existing = accounts.find(item =>
-                String(item.discordUsername || '').trim().toLowerCase() === String(request.discordUsername || '').trim().toLowerCase()
+                normalizeText(item.discordUsername) === normalizeText(request.discordUsername)
             );
 
             if (!existing) {
@@ -979,6 +1795,7 @@
             request.rejectedAt = Date.now();
             requests[idx] = request;
             saveRequests(requests);
+            playNotificationSound('error');
 
             if (getPendingRequestId() === request.id) {
                 clearPendingRequest();
@@ -986,6 +1803,142 @@
 
             renderLeadershipDashboard();
             renderStatusCard();
+        }
+
+        function approveEditRequest(requestId) {
+            const requests = getEditRequests();
+            const idx = requests.findIndex(item => item.id === requestId);
+            if (idx === -1) return;
+
+            const request = requests[idx];
+            if (request.status !== 'pending') return;
+
+            const accounts = getAccounts();
+            const accountIndex = accounts.findIndex(item => item.id === request.accountId);
+
+            if (accountIndex === -1) {
+                request.status = 'rejected';
+                request.rejectedAt = Date.now();
+                requests[idx] = request;
+                saveEditRequests(requests);
+                renderLeadershipDashboard();
+                renderStatusCard();
+                return;
+            }
+
+            const duplicateUsername = accounts.some(item =>
+                item.id !== request.accountId &&
+                normalizeText(item.discordUsername) === normalizeText(request.newDiscordUsername)
+            );
+
+            if (duplicateUsername) {
+                request.status = 'rejected';
+                request.rejectedAt = Date.now();
+                requests[idx] = request;
+                saveEditRequests(requests);
+                renderLeadershipDashboard();
+                renderStatusCard();
+                return;
+            }
+
+            const account = accounts[accountIndex];
+            account.realName = request.newRealName;
+            account.rank = request.newRank;
+            account.password = request.newPassword;
+            account.discordUsername = request.newDiscordUsername;
+            accounts[accountIndex] = account;
+            saveAccounts(accounts);
+
+            const session = getSession();
+            if (session && normalizeText(session.discordUsername) === normalizeText(request.oldDiscordUsername)) {
+                saveSession({
+                    discordUsername: request.newDiscordUsername,
+                    loggedInAt: session.loggedInAt || Date.now()
+                });
+            }
+
+            request.status = 'approved';
+            request.approvedAt = Date.now();
+            requests[idx] = request;
+            saveEditRequests(requests);
+            playNotificationSound('success');
+
+            renderLeadershipDashboard();
+            renderStatusCard();
+        }
+
+        function rejectEditRequest(requestId) {
+            const requests = getEditRequests();
+            const idx = requests.findIndex(item => item.id === requestId);
+            if (idx === -1) return;
+
+            const request = requests[idx];
+            if (request.status !== 'pending') return;
+
+            request.status = 'rejected';
+            request.rejectedAt = Date.now();
+            requests[idx] = request;
+            saveEditRequests(requests);
+            playNotificationSound('error');
+
+            renderLeadershipDashboard();
+            renderStatusCard();
+        }
+
+        function deleteApprovedAccount(accountId) {
+            const account = findAccountById(accountId);
+            if (!account) return;
+
+            const filteredAccounts = getAccounts().filter(item => item.id !== accountId);
+            saveAccounts(filteredAccounts);
+
+            const filteredEditRequests = getEditRequests().filter(item => item.accountId !== accountId);
+            saveEditRequests(filteredEditRequests);
+
+            const filteredComplaints = getComplaints().filter(item => item.accountId !== accountId);
+            saveComplaints(filteredComplaints);
+
+            const session = getSession();
+            if (session && normalizeText(session.discordUsername) === normalizeText(account.discordUsername)) {
+                clearSession();
+            }
+
+            renderLeadershipDashboard();
+            renderStatusCard();
+        }
+
+        function approveComplaint(complaintId) {
+            const complaints = getComplaints();
+            const idx = complaints.findIndex(item => item.id === complaintId);
+            if (idx === -1) return;
+
+            const complaint = complaints[idx];
+            if (complaint.status !== 'pending') return;
+
+            complaint.status = 'approved';
+            complaint.approvedAt = Date.now();
+            complaints[idx] = complaint;
+            saveComplaints(complaints);
+            playNotificationSound('success');
+
+            renderLeadershipDashboard();
+        }
+
+        function rejectComplaint(complaintId) {
+            const complaints = getComplaints();
+            const idx = complaints.findIndex(item => item.id === complaintId);
+            if (idx === -1) return;
+
+            const complaint = complaints[idx];
+            if (complaint.status !== 'pending') return;
+
+            complaint.status = 'rejected';
+            complaint.rejectedAt = Date.now();
+            complaints[idx] = complaint;
+            saveComplaints(complaints);
+            playNotificationSound('error');
+
+            renderLeadershipDashboard();
         }
 
         function resetPendingRequest() {
@@ -1026,12 +1979,12 @@
             const accounts = getAccounts();
 
             const duplicateInRequests = requests.some(item =>
-                String(item.discordUsername || '').trim().toLowerCase() === discordUsername.toLowerCase() &&
+                normalizeText(item.discordUsername) === normalizeText(discordUsername) &&
                 item.status === 'pending'
             );
 
             const duplicateInAccounts = accounts.some(item =>
-                String(item.discordUsername || '').trim().toLowerCase() === discordUsername.toLowerCase()
+                normalizeText(item.discordUsername) === normalizeText(discordUsername)
             );
 
             if (duplicateInRequests || duplicateInAccounts) {
@@ -1086,6 +2039,204 @@
             showPage(null, 'home-page');
         }
 
+        function handleEditRequestSubmit(event) {
+            event.preventDefault();
+
+            const currentDiscord = qs('editCurrentDiscord').value.trim();
+            const currentPassword = qs('editCurrentPassword').value.trim();
+            const newRealNameInput = qs('editNewRealName').value.trim();
+            const newRankInput = qs('editNewRank').value.trim();
+            const newDiscordInput = qs('editNewDiscordUsername').value.trim();
+            const newPasswordInput = qs('editNewPassword').value.trim();
+
+            const error = qs('editRequestError');
+            const success = qs('editRequestSuccess');
+
+            const account = findAccountByUsername(currentDiscord);
+
+            if (!account || account.password !== currentPassword) {
+                error.style.display = 'block';
+                success.style.display = 'none';
+                return;
+            }
+
+            const finalRealName = newRealNameInput || account.realName;
+            const finalRank = newRankInput || account.rank;
+            const finalDiscordUsername = newDiscordInput || account.discordUsername;
+            const finalPassword = newPasswordInput || account.password;
+
+            const noChanges =
+                normalizeText(finalRealName) === normalizeText(account.realName) &&
+                normalizeText(finalRank) === normalizeText(account.rank) &&
+                normalizeText(finalDiscordUsername) === normalizeText(account.discordUsername) &&
+                finalPassword === account.password;
+
+            if (noChanges) {
+                error.style.display = 'block';
+                success.style.display = 'none';
+                return;
+            }
+
+            const duplicateUsername = getAccounts().some(item =>
+                item.id !== account.id &&
+                normalizeText(item.discordUsername) === normalizeText(finalDiscordUsername)
+            );
+
+            if (duplicateUsername) {
+                error.style.display = 'block';
+                success.style.display = 'none';
+                return;
+            }
+
+            const editRequests = getEditRequests();
+            const duplicatePendingEdit = editRequests.some(item =>
+                item.accountId === account.id && item.status === 'pending'
+            );
+
+            if (duplicatePendingEdit) {
+                error.style.display = 'block';
+                success.style.display = 'none';
+                return;
+            }
+
+            error.style.display = 'none';
+            success.style.display = 'none';
+
+            editRequests.push({
+                id: uid(),
+                accountId: account.id,
+                oldRealName: account.realName,
+                oldRank: account.rank,
+                oldPassword: account.password,
+                oldDiscordUsername: account.discordUsername,
+                newRealName: finalRealName,
+                newRank: finalRank,
+                newPassword: finalPassword,
+                newDiscordUsername: finalDiscordUsername,
+                status: 'pending',
+                createdAt: Date.now()
+            });
+
+            saveEditRequests(editRequests);
+
+            qs('editRequestForm').reset();
+            success.style.display = 'block';
+
+            renderStatusCard();
+            renderLeadershipDashboard();
+
+            setTimeout(() => {
+                success.style.display = 'none';
+            }, 2500);
+        }
+
+
+        function renderComplaintPage() {
+            const session = getSession();
+            const unlockedAccountId = sessionStorage.getItem(STORAGE_KEYS.complaintUnlocked);
+            const unlockPanel = qs('complaintUnlockPanel');
+            const formPanel = qs('complaintFormPanel');
+            const unlockDiscord = qs('complaintUnlockDiscord');
+            const complaintDiscord = qs('complaintDiscordUsername');
+
+            if (unlockedAccountId) {
+                const account = findAccountById(unlockedAccountId);
+                if (account) {
+                    unlockPanel.style.display = 'none';
+                    formPanel.style.display = 'block';
+                    complaintDiscord.value = account.discordUsername;
+                    return;
+                }
+                sessionStorage.removeItem(STORAGE_KEYS.complaintUnlocked);
+            }
+
+            unlockPanel.style.display = 'block';
+            formPanel.style.display = 'none';
+            if (session && session.discordUsername) {
+                unlockDiscord.value = session.discordUsername;
+            }
+            qs('complaintUnlockPassword').value = '';
+            qs('complaintUnlockError').style.display = 'none';
+            qs('complaintUnlockForm').reset();
+            if (session && session.discordUsername) {
+                unlockDiscord.value = session.discordUsername;
+            }
+        }
+
+        function handleComplaintUnlockSubmit(event) {
+            event.preventDefault();
+
+            const discord = qs('complaintUnlockDiscord').value.trim();
+            const password = qs('complaintUnlockPassword').value.trim();
+            const error = qs('complaintUnlockError');
+
+            const account = findAccountByUsername(discord);
+
+            if (!account || account.password !== password) {
+                error.style.display = 'block';
+                return;
+            }
+
+            error.style.display = 'none';
+            sessionStorage.setItem(STORAGE_KEYS.complaintUnlocked, account.id);
+
+            qs('complaintDiscordUsername').value = account.discordUsername;
+            qs('complaintUnlockForm').reset();
+            qs('complaintUnlockDiscord').value = account.discordUsername;
+            qs('complaintFormPanel').style.display = 'block';
+            qs('complaintUnlockPanel').style.display = 'none';
+        }
+
+        function handleComplaintSubmit(event) {
+            event.preventDefault();
+
+            const accountId = sessionStorage.getItem(STORAGE_KEYS.complaintUnlocked);
+            const account = accountId ? findAccountById(accountId) : null;
+            const success = qs('complaintSuccess');
+            const error = qs('complaintError');
+
+            if (!account) {
+                error.style.display = 'block';
+                success.style.display = 'none';
+                return;
+            }
+
+            const robloxUsername = qs('complaintRobloxUsername').value.trim();
+            const accusedUsername = qs('complaintAccusedUsername').value.trim();
+            const reason = qs('complaintReason').value.trim();
+            const evidence = qs('complaintEvidence').value.trim();
+
+            if (!robloxUsername || !accusedUsername || !reason || !evidence) {
+                error.style.display = 'block';
+                success.style.display = 'none';
+                return;
+            }
+
+            const complaints = getComplaints();
+            complaints.push({
+                id: uid(),
+                accountId: account.id,
+                discordUsername: account.discordUsername,
+                robloxUsername,
+                accusedUsername,
+                reason,
+                evidence,
+                status: 'pending',
+                createdAt: Date.now()
+            });
+
+            saveComplaints(complaints);
+
+            qs('complaintForm').reset();
+            qs('complaintDiscordUsername').value = account.discordUsername;
+            error.style.display = 'none';
+            success.style.display = 'block';
+
+            setTimeout(() => {
+                success.style.display = 'none';
+            }, 2500);
+        }
+
         function handleAnnouncementSubmit(event) {
             event.preventDefault();
 
@@ -1103,6 +2254,8 @@
                 id: uid(),
                 title,
                 message,
+                category: 'عام',
+                likes: 0,
                 createdAt: Date.now()
             });
 
@@ -1168,6 +2321,9 @@
 
             qs('signupForm').addEventListener('submit', handleSignupSubmit);
             qs('loginForm').addEventListener('submit', handleLoginSubmit);
+            qs('editRequestForm').addEventListener('submit', handleEditRequestSubmit);
+            qs('complaintUnlockForm').addEventListener('submit', handleComplaintUnlockSubmit);
+            qs('complaintForm').addEventListener('submit', handleComplaintSubmit);
             qs('announcementForm').addEventListener('submit', handleAnnouncementSubmit);
 
             const pendingId = getPendingRequestId();
