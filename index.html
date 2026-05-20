@@ -1479,7 +1479,6 @@
             const q = (qs('leadershipSearch')?.value || '').trim().toLowerCase();
 
             const items = getRequests()
-                .filter(item => item.accountType !== 'leadership')
                 .slice()
                 .sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
 
@@ -1958,6 +1957,25 @@
             });
         }
 
+
+        function refreshVisibleViews() {
+            updateAuthenticatedUI();
+
+            const pages = {
+                'home-page': renderStatusCard,
+                'leadership-page': renderLeadershipDashboard,
+                'announcements-page': renderAnnouncementsPage,
+                'complaint-page': renderComplaintPage
+            };
+
+            for (const [pageId, renderer] of Object.entries(pages)) {
+                const page = qs(pageId);
+                if (page && page.classList.contains('active-page')) {
+                    renderer();
+                }
+            }
+        }
+
         function deleteAnnouncement(id) {
             const filtered = getAnnouncements().filter(item => item.id !== id);
             saveAnnouncements(filtered);
@@ -2255,6 +2273,9 @@
             saveRequests(requests);
             savePendingRequestId(request.id);
 
+            renderLeadershipDashboard();
+            updateAuthenticatedUI();
+
             qs('createLeadershipForm').reset();
             renderStatusCard();
             showPage(null, 'home-page');
@@ -2273,8 +2294,8 @@
         function confirmLogout() {
             closeLogoutConfirm();
             clearSession();
-            renderStatusCard();
             updateAuthenticatedUI();
+            renderStatusCard();
             showPage(null, 'home-page');
         }
 
@@ -2334,6 +2355,8 @@
             saveRequests(requests);
             savePendingRequestId(request.id);
 
+            renderLeadershipDashboard();
+
             qs('signupForm').reset();
             renderStatusCard();
             showPage(null, 'home-page');
@@ -2359,6 +2382,8 @@
                 discordUsername: account.discordUsername,
                 loggedInAt: Date.now()
             });
+
+            updateAuthenticatedUI();
 
             qs('loginForm').reset();
             renderStatusCard();
@@ -2575,6 +2600,8 @@
 
             saveComplaints(complaints);
 
+            renderLeadershipDashboard();
+
             qs('complaintForm').reset();
             qs('complaintDiscordUsername').value = account.discordUsername;
             const preview = qs('complaintEvidencePreview');
@@ -2617,6 +2644,7 @@
 
             renderAnnouncementsPage();
             renderAnnouncementsAdminSection();
+            renderLeadershipDashboard();
 
             window.setTimeout(() => {
                 success.style.display = 'none';
@@ -2667,29 +2695,7 @@
 
         window.addEventListener('storage', () => {
             repairDataModel();
-            updateAuthenticatedUI();
-
-            const homePage = qs('home-page');
-            const leadershipPage = qs('leadership-page');
-            const announcementsPage = qs('announcements-page');
-            const complaintPage = qs('complaint-page');
-            const createLeadershipPage = qs('create-leadership-page');
-
-            if (homePage && homePage.classList.contains('active-page')) {
-                renderStatusCard();
-            }
-            if (leadershipPage && leadershipPage.classList.contains('active-page')) {
-                renderLeadershipDashboard();
-            }
-            if (announcementsPage && announcementsPage.classList.contains('active-page')) {
-                renderAnnouncementsPage();
-            }
-            if (complaintPage && complaintPage.classList.contains('active-page')) {
-                renderComplaintPage();
-            }
-            if (createLeadershipPage && createLeadershipPage.classList.contains('active-page')) {
-                renderCreateLeadershipPage();
-            }
+            refreshVisibleViews();
         });
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -2724,6 +2730,25 @@
                 qs('loader').style.display = 'none';
             }, 700);
         });
+
+        setInterval(() => {
+            const leadershipPage = qs('leadership-page');
+            const complaintPage = qs('complaint-page');
+            const announcementsPage = qs('announcements-page');
+            const homePage = qs('home-page');
+            if (leadershipPage && leadershipPage.classList.contains('active-page')) {
+                renderLeadershipDashboard();
+            }
+            if (complaintPage && complaintPage.classList.contains('active-page')) {
+                renderComplaintPage();
+            }
+            if (announcementsPage && announcementsPage.classList.contains('active-page')) {
+                renderAnnouncementsPage();
+            }
+            if (homePage && homePage.classList.contains('active-page')) {
+                renderStatusCard();
+            }
+        }, 2000);
     </script>
 </body>
 </html>

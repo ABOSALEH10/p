@@ -135,6 +135,10 @@ body{
     flex:1;
 }
 
+.hidden{
+    display:none !important;
+}
+
 .active-page{
     display:block;
     animation:fadeIn .35s ease;
