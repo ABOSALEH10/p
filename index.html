@@ -45,7 +45,7 @@
                 رفع شكوى
             </button>
 
-            <button id="leadershipNavBtn" onclick="showPage(event,'leadership-page')" class="nav-btn">
+            <button id="leadershipNavBtn" onclick="showPage(event,'leadership-page')" class="nav-btn hidden">
                 <i class="fa-solid fa-user-gear"></i>
                 لوحة التحكم الخاصة بالقيادة
             </button>
@@ -55,7 +55,7 @@
                 التعميمات والأخبار
             </button>
 
-            <button id="createLeadershipNavBtn" onclick="showPage(event,'create-leadership-page')" class="nav-btn">
+            <button id="createLeadershipNavBtn" onclick="showPage(event,'create-leadership-page')" class="nav-btn hidden">
                 <i class="fa-solid fa-user-shield"></i>
                 إنشاء حسابات القيادة
             </button>
@@ -1046,6 +1046,22 @@
             return findAccountByUsername(session.discordUsername);
         }
 
+        function updateAuthenticatedUI() {
+            const isLoggedIn = !!getCurrentAccountFromSession();
+
+            const helpBox = qs('helpBox');
+            if (helpBox) {
+                helpBox.classList.toggle('hidden', isLoggedIn);
+            }
+
+            ['leadershipNavBtn', 'createLeadershipNavBtn'].forEach(id => {
+                const btn = qs(id);
+                if (btn) {
+                    btn.classList.toggle('hidden', !isLoggedIn);
+                }
+            });
+        }
+
         function repairDataModel() {
             let requests = getRequests().map(normalizeRequest).filter(Boolean);
             let accounts = getAccounts().map(normalizeAccount).filter(Boolean);
@@ -1121,7 +1137,7 @@
         }
 
         function showPage(event, pageId) {
-            if (pageId === 'leadership-page' && !isLeadershipUnlocked()) {
+            if ((pageId === 'leadership-page' || pageId === 'create-leadership-page') && !isLeadershipUnlocked()) {
                 openLeadershipGate();
                 return;
             }
@@ -1266,6 +1282,8 @@
             const statusCard = qs('statusCard');
             const session = getSession();
             const request = getCurrentRequestForHome();
+
+            updateAuthenticatedUI();
 
             if (session) {
                 const account = getCurrentAccountFromSession();
@@ -2256,6 +2274,7 @@
             closeLogoutConfirm();
             clearSession();
             renderStatusCard();
+            updateAuthenticatedUI();
             showPage(null, 'home-page');
         }
 
@@ -2645,6 +2664,33 @@
             void modal.offsetWidth;
             modal.classList.add('shake');
         }
+
+        window.addEventListener('storage', () => {
+            repairDataModel();
+            updateAuthenticatedUI();
+
+            const homePage = qs('home-page');
+            const leadershipPage = qs('leadership-page');
+            const announcementsPage = qs('announcements-page');
+            const complaintPage = qs('complaint-page');
+            const createLeadershipPage = qs('create-leadership-page');
+
+            if (homePage && homePage.classList.contains('active-page')) {
+                renderStatusCard();
+            }
+            if (leadershipPage && leadershipPage.classList.contains('active-page')) {
+                renderLeadershipDashboard();
+            }
+            if (announcementsPage && announcementsPage.classList.contains('active-page')) {
+                renderAnnouncementsPage();
+            }
+            if (complaintPage && complaintPage.classList.contains('active-page')) {
+                renderComplaintPage();
+            }
+            if (createLeadershipPage && createLeadershipPage.classList.contains('active-page')) {
+                renderCreateLeadershipPage();
+            }
+        });
 
         document.addEventListener('DOMContentLoaded', () => {
             repairDataModel();
