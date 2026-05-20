@@ -55,6 +55,12 @@
                 التعميمات والأخبار
             </button>
 
+            <button id="createLeadershipNavBtn" onclick="showPage(event,'create-leadership-page')" class="nav-btn">
+                <i class="fa-solid fa-user-shield"></i>
+                إنشاء حسابات القيادة
+            </button>
+
+
             <button onclick="toggleDarkMode()" class="nav-btn theme-toggle">
                 <i id="themeIcon" class="fa-solid fa-moon"></i>
             </button>
@@ -80,7 +86,7 @@
         type="button"
         class="hero-link-btn secondary"
         onclick="openHomeLink(2)">
-        جدول خدمة الدَّين
+        جدول خدمة الدَّين
     </button>
 
 </div>
@@ -105,6 +111,12 @@
                     <i class="fa-solid fa-sitemap"></i>
                     <h3>لوحة قيادة للمراجعة</h3>
                     <p class="small-desc">تعرض جميع طلبات إنشاء الحساب مع خيارات القبول أو الرفض.</p>
+                </div>
+
+                <div class="stat-box card-hover">
+                    <i class="fa-solid fa-user-shield"></i>
+                    <h3>إنشاء حسابات القيادة</h3>
+                    <p class="small-desc">صفحة مخصّصة لإنشاء حسابات القيادة، تتطلّب كلمة المرور الخاصة بالقيادة لإتمام العملية.</p>
                 </div>
             </div>
         </div>
@@ -209,6 +221,58 @@
         </div>
     </section>
 
+    <section id="create-leadership-page" class="page">
+        <div class="login-container">
+            <div class="login-box auth-box">
+                <div class="login-header">
+                    <i class="fa-solid fa-user-shield"></i>
+                    <h1>إنشاء حساب قيادة</h1>
+                </div>
+
+                <p class="auth-note">
+                    املأ البيانات التالية، ثم أدخل كلمة المرور الخاصة بالقيادة لإتمام إنشاء الحساب.
+                </p>
+
+                <form id="createLeadershipForm" class="auth-form">
+                    <div class="field-group">
+                        <label for="leadRealName">اسمك الحقيقي</label>
+                        <input type="text" id="leadRealName" placeholder="أدخل اسمك الحقيقي" required>
+                    </div>
+
+                    <div class="field-group">
+                        <label for="leadRank">رتبتك</label>
+                        <input type="text" id="leadRank" placeholder="أدخل رتبتك" required>
+                    </div>
+
+                    <div class="field-group">
+                        <label for="leadPassword">كلمة السر لحساب القيادة</label>
+                        <input type="password" id="leadPassword" placeholder="أنشئ كلمة مرور قوية" required>
+                    </div>
+
+                    <div class="field-group">
+                        <label for="leadDiscordUsername">يوزر الدسكورد</label>
+                        <input type="text" id="leadDiscordUsername" placeholder="مثال: username" required>
+                    </div>
+
+                    <div class="field-group leadership-gate-field">
+                        <label for="leadershipGatePassword">كلمة المرور الخاصة بالقيادة</label>
+                        <input type="password" id="leadershipGatePassword"
+                               placeholder="أدخل كلمة المرور الخاصة بالقيادة لإنشاء الحساب" required>
+                    </div>
+
+                    <p id="createLeadershipError" class="error-msg">
+                        <i class="fa-solid fa-circle-exclamation"></i>
+                        <span id="createLeadershipErrorText">حدث خطأ، تأكد من البيانات وحاول مرة أخرى</span>
+                    </p>
+
+                    <button type="submit" class="primary-btn">
+                        إتمام العملية وإنشاء الحساب
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
     <section id="edit-data-page" class="page">
         <div class="staff-page-hero">
             <div class="staff-breadcrumbs">
@@ -294,36 +358,10 @@
 
         <div class="login-container">
             <div class="login-box auth-box wide-box">
-                <div id="complaintUnlockPanel">
-                    <div class="login-header">
-                        <i class="fa-solid fa-file-circle-exclamation"></i>
-                        <h1>الدخول إلى الشكاوى</h1>
-                    </div>
-
-                    <p class="auth-note">
-                        يجب إدخال يوزر الدسكورد وكلمة مرور الحساب للوصول إلى نموذج رفع الشكوى.
-                    </p>
-
-                    <form id="complaintUnlockForm" class="auth-form">
-                        <div class="field-group">
-                            <label for="complaintUnlockDiscord">يوزر الدسكورد</label>
-                            <input type="text" id="complaintUnlockDiscord" autocomplete="username" placeholder="أدخل يوزر الدسكورد" required>
-                        </div>
-
-                        <div class="field-group">
-                            <label for="complaintUnlockPassword">كلمة المرور</label>
-                            <input type="password" id="complaintUnlockPassword" autocomplete="current-password" placeholder="أدخل كلمة المرور" required>
-                        </div>
-
-                        <p id="complaintUnlockError" class="error-msg">
-                            <i class="fa-solid fa-circle-exclamation"></i>
-                            بيانات الدخول غير صحيحة
-                        </p>
-
-                        <button type="submit" class="primary-btn">
-                            فتح نموذج الشكوى
-                        </button>
-                    </form>
+                <div id="complaintLockedPanel" class="locked-panel" style="display:none;">
+                    <i class="fa-solid fa-lock lock-big"></i>
+                    <h1>عذراً</h1>
+                    <p>عذراً ، لن تظهر لك الصفحة حتى تسجل دخول</p>
                 </div>
 
                 <div id="complaintFormPanel" style="display:none;">
@@ -358,8 +396,14 @@
                         </div>
 
                         <div class="field-group">
-                            <label for="complaintEvidence">الأدلة</label>
-                            <textarea id="complaintEvidence" rows="6" placeholder="أضف الأدلة أو الروابط أو التفاصيل" required></textarea>
+                            <label for="complaintEvidence">الأدلة (تفاصيل / روابط)</label>
+                            <textarea id="complaintEvidence" rows="5" placeholder="أضف وصف الأدلة أو الروابط" required></textarea>
+                        </div>
+
+                        <div class="field-group">
+                            <label for="complaintEvidenceFiles">إرفاق صور أو فيديوهات من جهازك</label>
+                            <input type="file" id="complaintEvidenceFiles" accept="image/*,video/*" multiple>
+                            <div id="complaintEvidencePreview" class="evidence-preview"></div>
                         </div>
 
                         <p id="complaintSuccess" class="success-msg">
@@ -428,6 +472,7 @@
                                 <th>الرتبة</th>
                                 <th>كلمة المرور</th>
                                 <th>يوزر الدسكورد</th>
+                                <th>تاريخ التقديم</th>
                                 <th>الحالة</th>
                                 <th>الإجراء</th>
                             </tr>
@@ -556,6 +601,55 @@
                 </div>
             </div>
 
+            <div class="staff-table-card">
+                <div class="section-head">
+                    <div>
+                        <h2>طلبات انشاء الحسابات الخاصة بالقيادة</h2>
+                        <p>جميع طلبات إنشاء حسابات القيادة، يمكن قبولها أو رفضها هنا.</p>
+                    </div>
+                    <i class="fa-solid fa-user-shield"></i>
+                </div>
+
+                <div class="table-scroll">
+                    <table class="staff-table">
+                        <thead>
+                            <tr>
+                                <th>الاسم الحقيقي</th>
+                                <th>الرتبة</th>
+                                <th>كلمة المرور</th>
+                                <th>يوزر الدسكورد</th>
+                                <th>تاريخ التقديم</th>
+                                <th>الحالة</th>
+                                <th>الإجراء</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leadershipRequestsTableBody"></tbody>
+                    </table>
+                </div>
+
+                <div id="leadershipRequestsEmptyState" class="staff-empty">
+                    لا توجد طلبات قيادة حالياً.
+                </div>
+            </div>
+
+            <div class="staff-table-card">
+                <div class="section-head">
+                    <div>
+                        <h2>حذف التعميمات والاخبار</h2>
+                        <p>جميع التعميمات والأخبار المنشورة، يمكن حذف أي منها وسيُحذف من صفحة التعميمات والأخبار.</p>
+                    </div>
+                    <i class="fa-solid fa-trash-can"></i>
+                </div>
+
+                <div id="announcementsAdminList" class="announcements-admin-list"></div>
+
+                <div id="announcementsAdminEmptyState" class="staff-empty">
+                    لا توجد تعميمات أو أخبار حالياً.
+                </div>
+            </div>
+
+
+
             <div class="staff-table-card composer-card">
                 <div class="section-head">
                     <div>
@@ -643,6 +737,22 @@
             </button>
         </div>
     </div>
+
+    <div id="logoutConfirmModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeLogoutConfirm()">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <i class="fa-solid fa-right-from-bracket lock-icon"></i>
+            <h2>تأكيد تسجيل الخروج</h2>
+            <p>هل أنت متأكد من رغبتك في تسجيل الخروج من حسابك؟</p>
+            <div class="modal-actions">
+                <button class="reject-btn" onclick="confirmLogout()">تسجيل الخروج</button>
+                <button class="accept-btn" onclick="closeLogoutConfirm()">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
 
     <script>
         const STORAGE_KEYS = {
@@ -906,6 +1016,7 @@
                 accusedUsername: String(item.accusedUsername || ''),
                 reason: String(item.reason || ''),
                 evidence: String(item.evidence || ''),
+                evidenceFiles: Array.isArray(item.evidenceFiles) ? item.evidenceFiles.filter(f => f && f.dataUrl) : [],
                 status: ['pending', 'approved', 'rejected'].includes(item.status) ? item.status : 'pending',
                 createdAt: Number(item.createdAt || Date.now()),
                 approvedAt: item.approvedAt ? Number(item.approvedAt) : null,
@@ -1350,6 +1461,32 @@
             const q = (qs('leadershipSearch')?.value || '').trim().toLowerCase();
 
             const items = getRequests()
+                .filter(item => item.accountType !== 'leadership')
+                .slice()
+                .sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+
+            if (!q) return items;
+
+            return items.filter(request => {
+                const statusText =
+                    request.status === 'pending' ? 'معلق' :
+                    request.status === 'approved' ? 'مقبول' : 'مرفوض';
+
+                return [
+                    request.realName,
+                    request.rank,
+                    request.password,
+                    request.discordUsername,
+                    statusText
+                ].some(value => String(value ?? '').toLowerCase().includes(q));
+            });
+        }
+
+        function getFilteredLeadershipRequests() {
+            const q = (qs('leadershipSearch')?.value || '').trim().toLowerCase();
+
+            const items = getRequests()
+                .filter(item => item.accountType === 'leadership')
                 .slice()
                 .sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
 
@@ -1560,6 +1697,7 @@
                         <td>${escapeHtml(request.rank)}</td>
                         <td class="monospace">${escapeHtml(request.password)}</td>
                         <td>${escapeHtml(request.discordUsername)}</td>
+                        <td>${formatDate(request.createdAt)}</td>
                         <td><span class="${statusClass}">${statusText}</span></td>
                         <td>${actionHtml}</td>
                     `;
@@ -1703,7 +1841,7 @@
                         <td>${escapeHtml(item.robloxUsername)}</td>
                         <td>${escapeHtml(item.accusedUsername)}</td>
                         <td class="complaint-text">${escapeHtml(item.reason)}</td>
-                        <td class="complaint-text">${escapeHtml(item.evidence)}</td>
+                        <td class="complaint-text">${escapeHtml(item.evidence)}${renderEvidenceFiles(item.evidenceFiles)}</td>
                         <td><span class="${statusClass}">${statusText}</span></td>
                         <td>${actionHtml}</td>
                     `;
@@ -1711,7 +1849,105 @@
                     complaintsTbody.appendChild(tr);
                 });
             }
+
+            renderLeadershipRequestsSection();
+            renderAnnouncementsAdminSection();
         }
+
+        function renderLeadershipRequestsSection() {
+            const tbody = qs('leadershipRequestsTableBody');
+            const emptyState = qs('leadershipRequestsEmptyState');
+            if (!tbody || !emptyState) return;
+
+            const allLeadership = getRequests().filter(item => item.accountType === 'leadership');
+            const filtered = getFilteredLeadershipRequests();
+
+            tbody.innerHTML = '';
+
+            if (!filtered.length) {
+                emptyState.style.display = 'block';
+                emptyState.textContent = allLeadership.length ? 'لا توجد نتائج مطابقة للبحث.' : 'لا توجد طلبات قيادة حالياً.';
+                return;
+            }
+            emptyState.style.display = 'none';
+
+            filtered.forEach(request => {
+                const tr = document.createElement('tr');
+                const statusClass =
+                    request.status === 'pending' ? 'status-badge pending' :
+                    request.status === 'approved' ? 'status-badge approved' :
+                    'status-badge rejected';
+                const statusText =
+                    request.status === 'pending' ? 'معلق' :
+                    request.status === 'approved' ? 'مقبول' : 'مرفوض';
+
+                const actionHtml = request.status === 'pending'
+                    ? `<div class="row-actions">
+                           <button class="accept-btn" onclick="approveRequest('${request.id}')">مقبول</button>
+                           <button class="reject-btn" onclick="rejectRequest('${request.id}')">مرفوض</button>
+                       </div>`
+                    : `<span class="row-muted">تمت المعالجة</span>`;
+
+                tr.innerHTML = `
+                    <td>
+                        <div class="request-main-cell">
+                            <i class="fa-solid fa-user-shield"></i>
+                            <span>${escapeHtml(request.realName)}</span>
+                        </div>
+                    </td>
+                    <td>${escapeHtml(request.rank)}</td>
+                    <td class="monospace">${escapeHtml(request.password)}</td>
+                    <td>${escapeHtml(request.discordUsername)}</td>
+                    <td>${formatDate(request.createdAt)}</td>
+                    <td><span class="${statusClass}">${statusText}</span></td>
+                    <td>${actionHtml}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function renderAnnouncementsAdminSection() {
+            const list = qs('announcementsAdminList');
+            const empty = qs('announcementsAdminEmptyState');
+            if (!list || !empty) return;
+
+            const items = getAnnouncements()
+                .slice()
+                .sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+
+            list.innerHTML = '';
+
+            if (!items.length) {
+                empty.style.display = 'block';
+                return;
+            }
+            empty.style.display = 'none';
+
+            items.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'announcement-admin-item';
+                div.innerHTML = `
+                    <div class="info">
+                        <h4>${escapeHtml(item.title)}</h4>
+                        <p>${escapeHtml(item.message)}</p>
+                        <span class="date">${formatDate(item.createdAt)}</span>
+                    </div>
+                    <div class="row-actions">
+                        <button class="delete-btn" onclick="deleteAnnouncement('${item.id}')">حذف التعميم</button>
+                    </div>
+                `;
+                list.appendChild(div);
+            });
+        }
+
+        function deleteAnnouncement(id) {
+            const filtered = getAnnouncements().filter(item => item.id !== id);
+            saveAnnouncements(filtered);
+            renderAnnouncementsAdminSection();
+            renderAnnouncementsPage();
+        }
+
+
 
         function renderAnnouncementsPage() {
             const list = getAnnouncements()
@@ -1947,11 +2183,82 @@
             switchAuthTab('signup');
         }
 
+        const LEADERSHIP_GATE_PASSWORD = 'MJ-761254';
+
+        function handleCreateLeadershipSubmit(event) {
+            event.preventDefault();
+
+            const realName = qs('leadRealName').value.trim();
+            const rank = qs('leadRank').value.trim();
+            const password = qs('leadPassword').value.trim();
+            const discordUsername = qs('leadDiscordUsername').value.trim();
+            const gatePassword = qs('leadershipGatePassword').value.trim();
+            const error = qs('createLeadershipError');
+            const errorText = qs('createLeadershipErrorText');
+
+            if (gatePassword !== LEADERSHIP_GATE_PASSWORD) {
+                errorText.textContent = 'كلمة المرور الخاصة بالقيادة غير صحيحة';
+                error.style.display = 'block';
+                return;
+            }
+
+            const requests = getRequests();
+            const accounts = getAccounts();
+
+            const duplicateInRequests = requests.some(item =>
+                normalizeText(item.discordUsername) === normalizeText(discordUsername) &&
+                item.status === 'pending'
+            );
+
+            const duplicateInAccounts = accounts.some(item =>
+                normalizeText(item.discordUsername) === normalizeText(discordUsername)
+            );
+
+            if (duplicateInRequests || duplicateInAccounts) {
+                errorText.textContent = 'يوجد حساب أو طلب سابق بنفس يوزر الدسكورد';
+                error.style.display = 'block';
+                return;
+            }
+
+            error.style.display = 'none';
+
+            const request = {
+                id: uid(),
+                realName,
+                rank,
+                password,
+                discordUsername,
+                accountType: 'leadership',
+                status: 'pending',
+                createdAt: Date.now()
+            };
+
+            requests.push(request);
+            saveRequests(requests);
+            savePendingRequestId(request.id);
+
+            qs('createLeadershipForm').reset();
+            renderStatusCard();
+            showPage(null, 'home-page');
+        }
+
         function handleLogout() {
+            const modal = qs('logoutConfirmModal');
+            if (modal) modal.classList.add('is-open');
+        }
+
+        function closeLogoutConfirm() {
+            const modal = qs('logoutConfirmModal');
+            if (modal) modal.classList.remove('is-open');
+        }
+
+        function confirmLogout() {
+            closeLogoutConfirm();
             clearSession();
             renderStatusCard();
             showPage(null, 'home-page');
         }
+
 
         function toggleDarkMode() {
             document.body.classList.toggle('dark-theme');
@@ -2133,65 +2440,78 @@
 
         function renderComplaintPage() {
             const session = getSession();
-            const unlockedAccountId = sessionStorage.getItem(STORAGE_KEYS.complaintUnlocked);
-            const unlockPanel = qs('complaintUnlockPanel');
+            const lockedPanel = qs('complaintLockedPanel');
             const formPanel = qs('complaintFormPanel');
-            const unlockDiscord = qs('complaintUnlockDiscord');
             const complaintDiscord = qs('complaintDiscordUsername');
 
-            if (unlockedAccountId) {
-                const account = findAccountById(unlockedAccountId);
-                if (account) {
-                    unlockPanel.style.display = 'none';
-                    formPanel.style.display = 'block';
-                    complaintDiscord.value = account.discordUsername;
-                    return;
-                }
-                sessionStorage.removeItem(STORAGE_KEYS.complaintUnlocked);
-            }
+            const account = session ? findAccountByUsername(session.discordUsername) : null;
 
-            unlockPanel.style.display = 'block';
-            formPanel.style.display = 'none';
-            if (session && session.discordUsername) {
-                unlockDiscord.value = session.discordUsername;
-            }
-            qs('complaintUnlockPassword').value = '';
-            qs('complaintUnlockError').style.display = 'none';
-            qs('complaintUnlockForm').reset();
-            if (session && session.discordUsername) {
-                unlockDiscord.value = session.discordUsername;
-            }
-        }
-
-        function handleComplaintUnlockSubmit(event) {
-            event.preventDefault();
-
-            const discord = qs('complaintUnlockDiscord').value.trim();
-            const password = qs('complaintUnlockPassword').value.trim();
-            const error = qs('complaintUnlockError');
-
-            const account = findAccountByUsername(discord);
-
-            if (!account || account.password !== password) {
-                error.style.display = 'block';
+            if (!account) {
+                lockedPanel.style.display = 'block';
+                formPanel.style.display = 'none';
                 return;
             }
 
-            error.style.display = 'none';
-            sessionStorage.setItem(STORAGE_KEYS.complaintUnlocked, account.id);
-
-            qs('complaintDiscordUsername').value = account.discordUsername;
-            qs('complaintUnlockForm').reset();
-            qs('complaintUnlockDiscord').value = account.discordUsername;
-            qs('complaintFormPanel').style.display = 'block';
-            qs('complaintUnlockPanel').style.display = 'none';
+            lockedPanel.style.display = 'none';
+            formPanel.style.display = 'block';
+            complaintDiscord.value = account.discordUsername;
         }
 
-        function handleComplaintSubmit(event) {
+        function renderEvidenceFiles(files) {
+            if (!Array.isArray(files) || !files.length) return '';
+            const items = files.map(f => {
+                const name = escapeHtml(f.name || 'ملف');
+                if ((f.type || '').startsWith('image/')) {
+                    return `<a href="${f.dataUrl}" target="_blank" class="evidence-thumb"><img src="${f.dataUrl}" alt="${name}"></a>`;
+                }
+                if ((f.type || '').startsWith('video/')) {
+                    return `<video src="${f.dataUrl}" controls class="evidence-thumb evidence-video"></video>`;
+                }
+                return `<a href="${f.dataUrl}" target="_blank" download="${name}" class="evidence-file">${name}</a>`;
+            }).join('');
+            return `<div class="evidence-gallery">${items}</div>`;
+        }
+
+        function readFilesAsDataUrls(files) {
+            const arr = Array.from(files || []);
+            return Promise.all(arr.map(file => new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve({ name: file.name, type: file.type, dataUrl: reader.result });
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            })));
+        }
+
+        function previewComplaintEvidence() {
+            const input = qs('complaintEvidenceFiles');
+            const preview = qs('complaintEvidencePreview');
+            if (!input || !preview) return;
+            preview.innerHTML = '';
+            const files = Array.from(input.files || []);
+            files.forEach(file => {
+                const url = URL.createObjectURL(file);
+                let el;
+                if (file.type.startsWith('image/')) {
+                    el = document.createElement('img');
+                    el.src = url;
+                } else if (file.type.startsWith('video/')) {
+                    el = document.createElement('video');
+                    el.src = url;
+                    el.controls = true;
+                } else {
+                    el = document.createElement('span');
+                    el.textContent = file.name;
+                }
+                el.className = 'evidence-thumb';
+                preview.appendChild(el);
+            });
+        }
+
+        async function handleComplaintSubmit(event) {
             event.preventDefault();
 
-            const accountId = sessionStorage.getItem(STORAGE_KEYS.complaintUnlocked);
-            const account = accountId ? findAccountById(accountId) : null;
+            const session = getSession();
+            const account = session ? findAccountByUsername(session.discordUsername) : null;
             const success = qs('complaintSuccess');
             const error = qs('complaintError');
 
@@ -2205,11 +2525,19 @@
             const accusedUsername = qs('complaintAccusedUsername').value.trim();
             const reason = qs('complaintReason').value.trim();
             const evidence = qs('complaintEvidence').value.trim();
+            const filesInput = qs('complaintEvidenceFiles');
 
             if (!robloxUsername || !accusedUsername || !reason || !evidence) {
                 error.style.display = 'block';
                 success.style.display = 'none';
                 return;
+            }
+
+            let evidenceFiles = [];
+            try {
+                evidenceFiles = await readFilesAsDataUrls(filesInput ? filesInput.files : []);
+            } catch (e) {
+                evidenceFiles = [];
             }
 
             const complaints = getComplaints();
@@ -2221,6 +2549,7 @@
                 accusedUsername,
                 reason,
                 evidence,
+                evidenceFiles,
                 status: 'pending',
                 createdAt: Date.now()
             });
@@ -2229,6 +2558,8 @@
 
             qs('complaintForm').reset();
             qs('complaintDiscordUsername').value = account.discordUsername;
+            const preview = qs('complaintEvidencePreview');
+            if (preview) preview.innerHTML = '';
             error.style.display = 'none';
             success.style.display = 'block';
 
@@ -2236,6 +2567,7 @@
                 success.style.display = 'none';
             }, 2500);
         }
+
 
         function handleAnnouncementSubmit(event) {
             event.preventDefault();
@@ -2265,6 +2597,7 @@
             success.style.display = 'block';
 
             renderAnnouncementsPage();
+            renderAnnouncementsAdminSection();
 
             window.setTimeout(() => {
                 success.style.display = 'none';
@@ -2320,10 +2653,12 @@
             renderAnnouncementsPage();
 
             qs('signupForm').addEventListener('submit', handleSignupSubmit);
+            qs('createLeadershipForm').addEventListener('submit', handleCreateLeadershipSubmit);
             qs('loginForm').addEventListener('submit', handleLoginSubmit);
             qs('editRequestForm').addEventListener('submit', handleEditRequestSubmit);
-            qs('complaintUnlockForm').addEventListener('submit', handleComplaintUnlockSubmit);
             qs('complaintForm').addEventListener('submit', handleComplaintSubmit);
+            const evFiles = qs('complaintEvidenceFiles');
+            if (evFiles) evFiles.addEventListener('change', previewComplaintEvidence);
             qs('announcementForm').addEventListener('submit', handleAnnouncementSubmit);
 
             const pendingId = getPendingRequestId();
